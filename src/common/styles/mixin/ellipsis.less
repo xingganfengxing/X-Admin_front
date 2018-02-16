@@ -1,0 +1,34 @@
+/**
+ * Thanks to
+ *    https://github.com/airyland/vux/blob/v2/src/styles/weui/base/mixin/text.less
+ *
+ */
+
+// 单行文本溢出
+.ellipsis(@w:auto) {
+  width: @w;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+
+// 多行文本溢出
+.ellipsisLn(@line) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @line;
+}
+
+.text_wrap() {
+  word-wrap:break-word;
+  word-break:break-all;
+}
+
+.hyphens() {
+  word-wrap:break-word;
+  -webkit-hyphens:auto;
+  hyphens:auto;
+}

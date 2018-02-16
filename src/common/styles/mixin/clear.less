@@ -1,0 +1,12 @@
+// 清除浮动
+.clear{/*IE兼容性*/
+  zoom: 1;
+  &::after{
+    display: block;
+    clear: both;
+    content: " ";
+    visibility: hidden;/*隐藏文字内容*/
+    height: 0;
+    line-height: 0;
+  }
+}

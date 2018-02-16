@@ -1,0 +1,51 @@
+/** 渐变色 **/
+
+// 从左至右线性渐变
+.to-right-gradient-color(@startColor: #fff, @endColor: #fff){
+  background: -webkit-linear-gradient(left, @startColor , @endColor); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, @startColor , @endColor); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, @startColor , @endColor); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, @startColor , @endColor); /* 标准的语法（必须放在最后） */
+}
+
+// 从右至左线性渐变
+.to-left-gradient-color(@startColor: #fff, @endColor: #fff) {
+  background: -webkit-linear-gradient(right, @startColor , @startColor);
+  background: -o-linear-gradient(left, @startColor , @endColor);
+  background: -moz-linear-gradient(left, @startColor , @endColor);
+  background: linear-gradient(to left, @startColor , @endColor);
+}
+
+// 从上到下线性渐变
+.to-bottom-gradient-color(@startColor: #fff, @endColor: #fff) {
+  background: -webkit-linear-gradient(@startColor , @startColor);
+  background: -o-linear-gradient(@startColor , @endColor);
+  background: -moz-linear-gradient(@startColor , @endColor);
+  background: linear-gradient(@startColor , @endColor);
+}
+
+// 从下到上线性渐变
+.to-top-gradient-color(@startColor: #fff, @endColor: #fff) {
+  background: -webkit-linear-gradient(bottom, @startColor , @startColor);
+  background: -o-linear-gradient(top, @startColor , @endColor);
+  background: -moz-linear-gradient(top, @startColor , @endColor);
+  background: linear-gradient(to top, @startColor , @endColor);
+}
+
+// 自定义角度及颜色线性渐变(最多五个颜色)
+.linear-gradient(@angle: 180deg, @color1: #fff, @color2: #fff, @color3: #fff, @color4: #fff, @color5: #fff) {
+  background: -webkit-linear-gradient(@arguments);
+  background: -o-linear-gradient(@arguments);
+  background: -moz-linear-gradient(@arguments);
+  background: linear-gradient(@arguments);
+}
+
+// 自定义形状及颜色分布径向渐变
+.radial-gradient(@shape: circle, @color1: #fff, @color2: #fff, @color3: #fff, @color4: #fff, @color5: #fff) {
+  background: -webkit-radial-gradient(@arguments);
+  background: -o-radial-gradient(@arguments);
+  background: -moz-radial-gradient(@arguments);
+  background: radial-gradient(@arguments);
+}
+
+

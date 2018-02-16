@@ -1,0 +1,19 @@
+// 阴影样式
+
+// 普通阴影样式
+.common-shadow(@shadowColor: #ddd) {
+  box-shadow: 0 0 30px @shadowColor;
+  -moz-box-shadow: 0 0 30px @shadowColor;
+  -o-box-shadow: 0 0 30px @shadowColor;
+  -webkit-box-shadow: 0 0 30px @shadowColor;
+}
+
+// 卡片阴影样式
+.card-shadow(@shadowColor: rgba(51,51,51,0.7)) {
+  -webkit-box-shadow: 5px 5px 30px -5px rgba(51,51,51,0.7);
+  -moz-box-shadow: 5px 5px 30px -5px rgba(51,51,51,0.7);
+  -o-box-shadow: 5px 5px 30px -5px rgba(51,51,51,0.7);
+  box-shadow: 5px 5px 30px -5px rgba(51,51,51,0.7);
+}
+
+
