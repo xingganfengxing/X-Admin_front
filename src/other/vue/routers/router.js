@@ -6,6 +6,7 @@ import Object from '../../../tools/object/index'
 import Index from '../../../pages/index'
 import Login from '../../../pages/auth/login'
 import Register from '../../../pages/auth/register'
+import Home from '../../../pages/home/home'
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,12 @@ const router = new VueRouter({
       path: '/register',
       name: 'register',
       component: Register,
+      requireAuth: false
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: Home,
       requireAuth: false
     }
   ]
