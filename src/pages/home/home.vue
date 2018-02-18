@@ -1,16 +1,14 @@
 <template>
-  <el-container>
-    <el-header style="padding: 0">
+  <el-container direction="vertical">
+    <el-header class="header-area">
       <v-header></v-header>
     </el-header>
-    <div class="content-area">
-      <el-aside>
+    <el-container class="content-area">
+      <el-aside class="aside-area">
         <v-aside></v-aside>
       </el-aside>
-
-      <el-main style="background-color: #000"></el-main>
-    </div>
-
+      <el-main class="main-area">Main</el-main>
+    </el-container>
   </el-container>
 </template>
 
@@ -35,7 +33,17 @@
 </script>
 
 <style scoped lang="less" type="text/less" rel="stylesheet/less">
+  @import "../../common/styles/index";
+
+  .header-area {
+    padding: 0;
+  }
+
   .content-area {
-    display: inline-flex;
+    height: calc(~"100vh - @{header-height}");
+    .aside-area {
+      background-color: @background-color;
+      width: 248px!important;
+    }
   }
 </style>

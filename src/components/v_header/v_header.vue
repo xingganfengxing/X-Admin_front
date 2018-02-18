@@ -1,11 +1,11 @@
 <template>
   <div class="header-area">
-    <div class="header-logo-area">
-      <router-link :to="{ path: '/' }">
+    <router-link :to="{ path: '/' }" class="header-logo-area">
+      <div>
         <img src="../../common/img/logo.png" />
-      </router-link>
+      </div>
       <span>X-Admin后台管理系统</span>
-    </div>
+    </router-link>
 
     <el-menu
       default-active="1"
@@ -13,9 +13,7 @@
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b" style="float: right;">
-      <el-menu-item index="1">人员管理</el-menu-item>
-      <el-menu-item index="2">任务调度</el-menu-item>
-      <el-submenu index="3">
+      <el-submenu index="1">
         <template slot="title">
           <img src="../../common/img/avatar.png" class="avatar-area" />
           <span>管理员</span>
@@ -47,13 +45,17 @@
   .header-area {
     display: flex;
     justify-content: space-between;
-    background-color: #545c64;
+    background-color: @background-color;
     height: @header-height;
     .header-logo-area {
       display: flex;
       justify-content: center;
       align-items: center;
-      a {
+      box-sizing: border-box;
+      border-right: 1px solid @border-color;
+      border-bottom: 1px solid @border-color;
+      padding: 0 25px 0 10px;
+      div {
         font-size: 0;
         display: block;
         img {
@@ -64,6 +66,13 @@
       }
       span {
         color: #fff;
+        font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+      }
+    }
+    :hover {
+      background-color: @background-color;
+      span {
+        color: @active-background-color;
       }
     }
   }
