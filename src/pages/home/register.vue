@@ -1,35 +1,29 @@
 <template>
-  <div style="height: 100%;">
-    <el-header height="30%">
-      <div class="v-header-area">
-        <router-link :to="{ path: '/' }">
-          <img src="../../common/img/logo.png">
-        </router-link>
-        <h3>注册</h3>
-      </div>
+  <el-container>
+    <el-header height="30%" class="v-header-area">
+      <router-link :to="{ path: '/' }">
+        <img src="../../common/img/logo.png">
+      </router-link>
+      <h3>注册</h3>
     </el-header>
     <el-main>
-      <el-row type="flex">
-        <el-col :span="9"></el-col>
-        <el-col :span="6"></el-col>
-      </el-row>
     </el-main>
 
-    <div class="fixed-float-ball">
-      <label @click="skipLoginPage" title="返回登录页面">
+    <v-float-ball position="left-bottom" title="返回登录页面" :link="{path : '/login'}">
+      <template slot="icon">
         <i class="el-icon-arrow-left"></i>
-      </label>
-    </div>
-  </div>
+      </template>
+    </v-float-ball>
+  </el-container>
 </template>
 
 <script type="text/ecmascript-6">
+  import VFloatBall from '../../components/v_float_ball/v_float_ball'
+
   export default {
-    methods: {
-      // 返回登录页面
-      skipLoginPage() {
-        this.$router.push({ path: '/login' });
-      }
+    methods: {},
+    components: {
+      VFloatBall
     }
   }
 </script>
@@ -44,6 +38,7 @@
   .v-header-area {
     height: 100%;
     width: 100%;
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;

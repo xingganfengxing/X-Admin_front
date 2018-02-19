@@ -1,12 +1,10 @@
 <template>
-  <div style="height: 100%;">
-    <el-header height="30%">
-      <div class="v-header-area">
-        <router-link :to="{ path: '/' }">
-          <img src="../../common/img/logo.png">
-        </router-link>
-        <h3>登录</h3>
-      </div>
+  <el-container>
+    <el-header height="30%" class="v-header-area">
+      <router-link :to="{ path: '/' }">
+        <img src="../../common/img/logo.png">
+      </router-link>
+      <h3>登录</h3>
     </el-header>
     <el-main>
       <el-row type="flex">
@@ -35,94 +33,104 @@
       </el-row>
     </el-main>
 
+    <v-float-ball title="前往注册页面" :link="{path : '/register'}">
+      <template slot="icon">
+        <i class="el-icon-arrow-right"></i>
+      </template>
+    </v-float-ball>
 
-  </div>
+  </el-container>
 </template>
 
 <script type="text/ecmascript-6">
-    export default {
-      data() {
-        let validateUsername = (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('用户名不能为空'));
-          } else if (!(/^[a-zA-Z\u4E00-\u9FA5]([a-zA-Z0-9\u4E00-\u9FA5]|[._]){3,7}$/).test(value)) {
-            callback(new Error('请确认用户名合法性'));
-          } else {
-            callback();
-          }
-        };
-        let validatePassword = (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('密码不能为空'));
-          } else if (!(/^[a-zA-Z0-9]{6,15}$/).test(value)) {
-            callback(new Error('请确认密码合法性'));
-          } else {
-            callback();
-          }
-        };
-        let checkVerifyCode = (rule, value, callback) => {
-          if (!value) {
-            return callback(new Error('验证码不能为空'));
-          }
-          setTimeout(() => {
-            // TODO 请求后台判断验证码是否合法
-            if (!(/^[a-zA-Z0-9]{4}$/).test(value)) {
-              callback(new Error('请确认验证码合法性'));
-            } else {
-              callback();
-            }
-          }, 1000);
-        };
-        return {
-          loginForm: {
-            username: '',
-            password: '',
-            verifyCode: ''
-          },
-          loginFormRules: {
-            username: [{
-              validator: validateUsername,
-              trigger: 'blur'
-            }],
-            password: [{
-              validator: validatePassword,
-              trigger: 'blur'
-            }],
-            verifyCode: [{
-              validator: checkVerifyCode,
-              trigger: 'blur'
-            }]
-          }
-        };
-      },
-      methods: {
-        // 提交登录表单
-        submitForm(formName) {
-          this.$refs[formName].validate((valid) => {
-            if (valid) {
-              const loading = this.$loading({
-                lock: true,
-                text: '登录中...'
-              });
-              // TODO 存储登录信息，并进行页面跳转
-              let _this = this;
-              setTimeout(() => {
-                loading.close();
-                _this.$router.push({ path: '/online' });
-              }, 2000);
-            } else {
-              this.$message({
-                message: '校验失败，无法进行登录',
-                type: 'error',
-                center: true,
-                duration: 1000
-              });
-              return false;
-            }
-          });
+  import VFloatBall from '../../components/v_float_ball/v_float_ball'
+
+  export default {
+    data() {
+      let validateUsername = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('用户名不能为空'));
+        } else if (!(/^[a-zA-Z\u4E00-\u9FA5]([a-zA-Z0-9\u4E00-\u9FA5]|[._]){3,7}$/).test(value)) {
+          callback(new Error('请确认用户名合法性'));
+        } else {
+          callback();
         }
+      };
+      let validatePassword = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('密码不能为空'));
+        } else if (!(/^[a-zA-Z0-9]{6,15}$/).test(value)) {
+          callback(new Error('请确认密码合法性'));
+        } else {
+          callback();
+        }
+      };
+      let checkVerifyCode = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('验证码不能为空'));
+        }
+        setTimeout(() => {
+          // TODO 请求后台判断验证码是否合法
+          if (!(/^[a-zA-Z0-9]{4}$/).test(value)) {
+            callback(new Error('请确认验证码合法性'));
+          } else {
+            callback();
+          }
+        }, 1000);
+      };
+      return {
+        loginForm: {
+          username: '',
+          password: '',
+          verifyCode: ''
+        },
+        loginFormRules: {
+          username: [{
+            validator: validateUsername,
+            trigger: 'blur'
+          }],
+          password: [{
+            validator: validatePassword,
+            trigger: 'blur'
+          }],
+          verifyCode: [{
+            validator: checkVerifyCode,
+            trigger: 'blur'
+          }]
+        }
+      };
+    },
+    methods: {
+      // 提交登录表单
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            const loading = this.$loading({
+              lock: true,
+              text: '登录中...'
+            });
+            // TODO 存储登录信息，并进行页面跳转
+            let _this = this;
+            setTimeout(() => {
+              loading.close();
+              _this.$router.push({ path: '/online' });
+            }, 2000);
+          } else {
+            this.$message({
+              message: '校验失败，无法进行登录',
+              type: 'error',
+              center: true,
+              duration: 1000
+            });
+            return false;
+          }
+        });
       }
+    },
+    components: {
+      VFloatBall
     }
+  }
 </script>
 
 <style scoped lang="less" type="text/less" rel="stylesheet/less">
@@ -134,6 +142,7 @@
   .v-header-area {
     height: 100%;
     width: 100%;
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;

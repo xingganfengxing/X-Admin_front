@@ -1,7 +1,7 @@
 <!--  悬浮球组件 -->
 <template>
-  <div class="fixed-float-ball">
-    <label @click="skip" :title="hoverTitle" :style="{'background-color' : backgroundColor, 'color' : fontColor}">
+  <div class="fixed-float-ball" :style="positionStyles">
+    <label @click="skip" :title="title" :style="ballStyles">
       <slot name="icon">
         <i class="el-icon-arrow-right"></i>
       </slot>
@@ -19,29 +19,66 @@
         return {}
     },
     props: {
-      hoverTitle: {
+      title: {
         type: String,
         default: ''
       },
       position: {
-        type: Array,
-        validator: function (val) {
-          return POSITION_ARRAY[val];
-        }
+        type: String,
+        default: 'right-bottom'
       },
-      backgroundColor: String,
-      fontColor: String,
-      isLink: {
-        type: Boolean,
-        default: true
-      }
+      distance: {
+        type: String,
+        default: '30px'
+      },
+      backgroundColor: {
+        type: String,
+        default: '#409eff'
+      },
+      color: {
+        type: String,
+        default: '#fff'
+      },
+      link: Object
     },
     computed: {
-
+      /**
+       * 计算圆球样式
+       *
+       * @returns {{}}
+       */
+      ballStyles() {
+        const styles = {};
+        styles['background-color'] = this.backgroundColor;
+        styles['color'] = this.color;
+        return styles;
+      },
+      /**
+       * 计算位置样式
+       *
+       * @returns {{}}
+       */
+      positionStyles() {
+        const styles = {};
+        let pArray = this.position.split('-');
+        styles[pArray[0]] = this.distance;
+        styles[pArray[1]] = this.distance;
+        return styles;
+      }
     },
     methods: {
       skip() {
-        this.$emit('on-click');
+        if (this.link) {
+          let path = this.link['path'];
+          let replace = this.link['replace'];
+          console.log(replace)
+          if (replace) {
+            this.$router.replace({ path : path });
+          } else {
+            this.$router.push({ path: path });
+          }
+        }
+        !this.link && this.$emit('on-click');
       }
     },
     components: {}
@@ -52,12 +89,9 @@
   @import "../../common/styles/index";
 
   @ball-size: 50px;
-  @ball-position: 30px;
 
   .fixed-float-ball {
     position: fixed;
-    bottom: @ball-position;
-    right: @ball-position;
     label {
       display: block;
       width: @ball-size;
