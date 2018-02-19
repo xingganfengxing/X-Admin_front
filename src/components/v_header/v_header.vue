@@ -1,6 +1,7 @@
+<!-- 顶部组件 -->
 <template>
-  <div class="header-area">
-    <router-link :to="{ path: '/' }" class="header-logo-area">
+  <div class="v-header-area">
+    <router-link :to="{ path: '/' }" class="v-header-logo-area" title="首页">
       <div>
         <img src="../../common/img/logo.png" />
       </div>
@@ -15,7 +16,7 @@
       active-text-color="#ffd04b" style="float: right;">
       <el-submenu index="1">
         <template slot="title">
-          <img src="../../common/img/avatar.png" class="avatar-area" />
+          <img src="../../common/img/avatar.png" class="v-avatar-area" />
           <span>管理员</span>
         </template>
         <el-menu-item index="3-1">修改信息</el-menu-item>
@@ -42,12 +43,12 @@
 <style scoped lang="less" type="text/less" rel="stylesheet/less">
   @import "../../common/styles/index";
 
-  .header-area {
+  .v-header-area {
     display: flex;
     justify-content: space-between;
     background-color: @background-color;
     height: @header-height;
-    .header-logo-area {
+    .v-header-logo-area {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -55,6 +56,7 @@
       border-right: 1px solid @border-color;
       border-bottom: 1px solid @border-color;
       padding: 0 25px 0 10px;
+      text-decoration: none;
       div {
         font-size: 0;
         display: block;
@@ -68,16 +70,13 @@
         color: #fff;
         font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
       }
-    }
-    :hover {
-      background-color: @background-color;
-      span {
-        color: @active-background-color;
+      &:hover {
+        background-color: @active-background-color;
       }
     }
   }
 
-  .avatar-area {
+  .v-avatar-area {
     display: inline-block;
     width: @header-height - 10px;
     height: @header-height - 10px;

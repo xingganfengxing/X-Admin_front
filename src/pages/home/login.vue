@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%;">
     <el-header height="30%">
-      <div class="header-area">
+      <div class="v-header-area">
         <router-link :to="{ path: '/' }">
           <img src="../../common/img/logo.png">
         </router-link>
@@ -35,11 +35,7 @@
       </el-row>
     </el-main>
 
-    <div class="fixed-page-skip">
-      <label @click="skipRegisterPage" title="前往注册页面">
-        <i class="el-icon-arrow-right"></i>
-      </label>
-    </div>
+
   </div>
 </template>
 
@@ -109,8 +105,10 @@
                 text: '登录中...'
               });
               // TODO 存储登录信息，并进行页面跳转
+              let _this = this;
               setTimeout(() => {
                 loading.close();
+                _this.$router.push({ path: '/online' });
               }, 2000);
             } else {
               this.$message({
@@ -122,10 +120,6 @@
               return false;
             }
           });
-        },
-        // 跳转注册页面
-        skipRegisterPage() {
-          this.$router.push({ path: '/register' });
         }
       }
     }
@@ -136,9 +130,8 @@
 
   @verify-code-input-width: 70%;
   @verify-code-input-height: 40px;
-  @fixed-page-skip-size: 50px;
 
-  .header-area {
+  .v-header-area {
     height: 100%;
     width: 100%;
     display: flex;
@@ -177,23 +170,6 @@
         height: 100%;
         width: 100%;
       }
-    }
-  }
-
-  .fixed-page-skip {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    label {
-      display: block;
-      width: @fixed-page-skip-size;
-      height: @fixed-page-skip-size;
-      border-radius: 50%;
-      background-color: @theme-color;
-      color: #fff;
-      text-align: center;
-      line-height: @fixed-page-skip-size;
-      cursor: pointer;
     }
   }
 

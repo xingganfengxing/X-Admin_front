@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%;">
     <el-header height="30%">
-      <div class="header-area">
+      <div class="v-header-area">
         <router-link :to="{ path: '/' }">
           <img src="../common/img/logo.png">
         </router-link>
@@ -50,7 +50,7 @@
 <style scoped lang="less" type="text/less" rel="stylesheet/less">
   @import "../common/styles/index";
 
-  .header-area {
+  .v-header-area {
     height: 100%;
     width: 100%;
     display: flex;

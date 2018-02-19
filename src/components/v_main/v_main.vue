@@ -1,13 +1,16 @@
+<!-- 主要内容组件 -->
 <template>
   <el-container direction="vertical">
-    <el-header class="header-area">
+    <el-header class="v-header-area">
       <v-header></v-header>
     </el-header>
-    <el-container class="content-area">
-      <el-aside class="aside-area">
+    <el-container class="v-content-area">
+      <el-aside class="v-aside-area">
         <v-aside></v-aside>
       </el-aside>
-      <el-main class="main-area">Main</el-main>
+      <el-main class="v-main-area">
+        <slot name="v-main-content"></slot>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -17,14 +20,6 @@
   import VAside from '../../components/v_aside/v_aside'
 
   export default {
-    data() {
-      return {
-
-      }
-    },
-    methods: {
-
-    },
     components: {
       VHeader,
       VAside
@@ -35,13 +30,13 @@
 <style scoped lang="less" type="text/less" rel="stylesheet/less">
   @import "../../common/styles/index";
 
-  .header-area {
+  .v-header-area {
     padding: 0;
   }
 
-  .content-area {
+  .v-content-area {
     height: calc(~"100vh - @{header-height}");
-    .aside-area {
+    .v-aside-area {
       background-color: @background-color;
       width: 248px!important;
     }

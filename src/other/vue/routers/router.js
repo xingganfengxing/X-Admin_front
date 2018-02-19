@@ -3,10 +3,16 @@ import VueRouter from 'vue-router'
 import Lockr from 'lockr'
 import Object from '../../../tools/object/index'
 
+// index
 import Index from '../../../pages/index'
-import Login from '../../../pages/auth/login'
-import Register from '../../../pages/auth/register'
-import Home from '../../../pages/home/home'
+
+// home
+import Login from '../../../pages/home/login'
+import Register from '../../../pages/home/register'
+
+// user
+import Online from '../../../pages/user/online'
+
 
 Vue.use(VueRouter);
 
@@ -32,9 +38,9 @@ const router = new VueRouter({
       requireAuth: false
     },
     {
-      path: '/home',
-      name: 'home',
-      component: Home,
+      path: '/online',
+      name: 'online',
+      component: Online,
       requireAuth: false
     }
   ]

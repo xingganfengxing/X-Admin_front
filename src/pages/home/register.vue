@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%;">
     <el-header height="30%">
-      <div class="header-area">
+      <div class="v-header-area">
         <router-link :to="{ path: '/' }">
           <img src="../../common/img/logo.png">
         </router-link>
@@ -15,7 +15,7 @@
       </el-row>
     </el-main>
 
-    <div class="fixed-page-skip">
+    <div class="fixed-float-ball">
       <label @click="skipLoginPage" title="返回登录页面">
         <i class="el-icon-arrow-left"></i>
       </label>
@@ -41,7 +41,7 @@
   @verify-code-input-height: 40px;
   @fixed-page-skip-size: 50px;
 
-  .header-area {
+  .v-header-area {
     height: 100%;
     width: 100%;
     display: flex;
@@ -83,7 +83,7 @@
     }
   }
 
-  .fixed-page-skip {
+  .fixed-float-ball {
     position: fixed;
     bottom: 30px;
     left: 30px;

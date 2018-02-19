@@ -6,6 +6,7 @@ import filter from './other/vue/filters/filter'
 import directive from './other/vue/directives/directive'
 import axios from './other/axios/axios'
 import store from './other/vuex/store'
+import './common/icon.css'
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
