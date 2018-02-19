@@ -8,7 +8,7 @@
   export default {}
 </script>
 
-<style lang="less" type="text/less" rel="stylesheet/less">
+<style scoped lang="less" type="text/less" rel="stylesheet/less">
   @import "common/styles/index";
   @import "common/css/style.css";
 

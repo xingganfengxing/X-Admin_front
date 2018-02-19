@@ -53,8 +53,6 @@
       justify-content: center;
       align-items: center;
       box-sizing: border-box;
-      border-right: 1px solid @border-color;
-      border-bottom: 1px solid @border-color;
       padding: 0 25px 0 10px;
       text-decoration: none;
       div {

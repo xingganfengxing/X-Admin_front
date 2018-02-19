@@ -1,23 +1,16 @@
 <template>
   <div style="height: 100%;">
-    <el-header height="30%">
-      <div class="v-header-area">
-        <router-link :to="{ path: '/' }">
-          <img src="../common/img/logo.png">
-        </router-link>
-        <h3>X-Admin后台管理系统</h3>
-      </div>
+    <el-header height="30%" class="v-header-area">
+      <router-link :to="{ path: '/' }">
+        <img src="../common/img/logo.png">
+      </router-link>
+      <h3>X-Admin后台管理系统</h3>
     </el-header>
 
-    <el-main>
-      <el-row type="flex">
-        <el-col :span="9"></el-col>
-        <el-col :span="6">
-          <el-button type="primary" round @click="projectDetail">详情介绍</el-button>
-          <el-button type="primary" round @click="skipLoginPage">前往登录</el-button>
-          <el-button type="primary" round @click="skipRegisterPage">前往注册</el-button>
-        </el-col>
-      </el-row>
+    <el-main class="v-main-area">
+      <el-button type="primary" round @click="projectDetail">详情介绍</el-button>
+      <el-button type="primary" round @click="skipLoginPage">前往登录</el-button>
+      <el-button type="primary" round @click="skipRegisterPage">前往注册</el-button>
     </el-main>
 
   </div>
@@ -54,6 +47,7 @@
     height: 100%;
     width: 100%;
     display: flex;
+    padding: 40px 20px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -69,5 +63,9 @@
       letter-spacing: 2px;
       color: @theme-color;
     }
+  }
+
+  .v-main-area {
+    text-align: center;
   }
 </style>

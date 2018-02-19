@@ -82,15 +82,14 @@
 
 <script type="text/ecmascript-6">
   const COMPONENT_NAME = 'v_aside';
-
-    export default {
-        name: COMPONENT_NAME,
-        data() {
-            return {}
-        },
-        methods: {},
-        components: {}
-    }
+  export default {
+    name: COMPONENT_NAME,
+    data() {
+        return {}
+    },
+    methods: {},
+    components: {}
+  }
 </script>
 
 <style scoped lang="less" type="text/less" rel="stylesheet/less">

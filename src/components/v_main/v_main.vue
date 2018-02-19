@@ -9,7 +9,7 @@
         <v-aside></v-aside>
       </el-aside>
       <el-main class="v-main-area">
-        <slot name="v-main-content"></slot>
+        <slot name="main"></slot>
       </el-main>
     </el-container>
   </el-container>
@@ -18,8 +18,15 @@
 <script type="text/ecmascript-6">
   import VHeader from '../../components/v_header/v_header'
   import VAside from '../../components/v_aside/v_aside'
+  const COMPONENT_NAME = 'v_main';
 
   export default {
+    name: COMPONENT_NAME,
+    data() {
+      return {
+
+      }
+    },
     components: {
       VHeader,
       VAside
