@@ -5,7 +5,7 @@
       <v-header></v-header>
     </el-header>
     <el-container class="v-content-area">
-      <el-aside class="v-aside-area">
+      <el-aside :width="$store.state.asideWidth" class="v-aside-area">
         <v-aside></v-aside>
       </el-aside>
       <el-main class="v-main-area">
@@ -45,7 +45,6 @@
     height: calc(~"100vh - @{header-height}");
     .v-aside-area {
       background-color: @background-color;
-      width: 248px!important;
     }
   }
 </style>

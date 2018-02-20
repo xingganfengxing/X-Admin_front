@@ -1,11 +1,17 @@
 <!-- 侧边栏组建 -->
 <template>
   <el-menu
-    default-active="2"
+    default-active="1"
     background-color="#545c64"
     text-color="#fff"
-    active-text-color="#ffd04b"
-    style="border: none;">
+    style="border: none;"
+    :collapse="isCollapse">
+    <el-menu-item index="0" @click="collapse">
+      <i v-if="!isCollapse" class="el-icon-d-arrow-left"></i>
+      <i v-if="isCollapse" class="el-icon-d-arrow-right"></i>
+      <span v-if="!isCollapse" slot="title">收起菜单</span>
+      <span v-if="isCollapse" slot="title">展开菜单</span>
+    </el-menu-item>
     <el-submenu index="1">
       <template slot="title">
         <i class="v-icon-common v-icon-user"></i>
@@ -26,30 +32,10 @@
     <el-submenu index="3">
       <template slot="title">
         <i class="v-icon-common v-icon-sys"></i>
-        <span>系统管理</span>
+        <span>字典管理</span>
       </template>
-      <el-menu-item-group title="字典管理">
-        <el-menu-item index="3-1">字典查询</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="短信管理">
-        <el-menu-item index="3-2">短信配置</el-menu-item>
-        <el-menu-item index="3-3">短信查询</el-menu-item>
-        <el-menu-item index="3-4">短信发送</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="邮件管理">
-        <el-menu-item index="3-5">邮件配置</el-menu-item>
-        <el-menu-item index="3-6">邮件查询</el-menu-item>
-        <el-menu-item index="3-7">邮件发送</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="公告管理">
-        <el-menu-item index="3-8">公告查询</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="任务管理">
-        <el-menu-item index="3-9">任务查询</el-menu-item>
-        <el-menu-item index="3-10">任务新增</el-menu-item>
-        <el-menu-item index="3-11">任务删除</el-menu-item>
-        <el-menu-item index="3-12">其他操作</el-menu-item>
-      </el-menu-item-group>
+      <el-menu-item index="3-1">字典配置</el-menu-item>
+      <el-menu-item index="3-2">字典查询</el-menu-item>
     </el-submenu>
     <el-submenu index="4">
       <template slot="title">
@@ -77,6 +63,44 @@
       <el-menu-item index="6-2">管理员日志</el-menu-item>
       <el-menu-item index="6-3">系统日志</el-menu-item>
     </el-submenu>
+    <el-submenu index="7">
+      <template slot="title">
+        <i class="v-icon-common v-icon-sms"></i>
+        <span>短信管理</span>
+      </template>
+      <el-menu-item index="7-1">短信配置</el-menu-item>
+      <el-menu-item index="7-2">短信查询</el-menu-item>
+      <el-menu-item index="7-3">短信发送</el-menu-item>
+    </el-submenu>
+    <el-submenu index="8">
+      <template slot="title">
+        <i class="v-icon-common v-icon-mail"></i>
+        <span>邮件管理</span>
+      </template>
+      <el-menu-item index="8-1">邮件配置</el-menu-item>
+      <el-menu-item index="8-2">邮件查询</el-menu-item>
+      <el-menu-item index="8-3">邮件发送</el-menu-item>
+    </el-submenu>
+    <el-submenu index="9">
+      <template slot="title">
+        <i class="v-icon-common v-icon-notice"></i>
+        <span>公告管理</span>
+      </template>
+      <el-menu-item index="9-1">公告查询</el-menu-item>
+      <el-menu-item index="9-2">公告新增</el-menu-item>
+      <el-menu-item index="9-3">公告删除</el-menu-item>
+      <el-menu-item index="9-4">公告修改</el-menu-item>
+    </el-submenu>
+    <el-submenu index="10">
+      <template slot="title">
+        <i class="v-icon-common v-icon-task"></i>
+        <span>任务管理</span>
+      </template>
+      <el-menu-item index="10-1">任务查询</el-menu-item>
+      <el-menu-item index="10-2">任务新增</el-menu-item>
+      <el-menu-item index="10-3">任务删除</el-menu-item>
+      <el-menu-item index="10-4">其他操作</el-menu-item>
+    </el-submenu>
   </el-menu>
 </template>
 
@@ -85,9 +109,21 @@
   export default {
     name: COMPONENT_NAME,
     data() {
-        return {}
+      return {
+        isCollapse: false
+      }
     },
-    methods: {},
+    methods: {
+      collapse() {
+        // 修改侧边栏宽度
+        if (this.isCollapse) { // 展开状态
+          this.$store.dispatch('updateAsideWidth', '248px');
+        } else { // 收起状态
+          this.$store.dispatch('updateAsideWidth', '64px');
+        }
+        this.isCollapse = !this.isCollapse;
+      }
+    },
     components: {}
   }
 </script>
