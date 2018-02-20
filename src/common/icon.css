@@ -1,15 +1,15 @@
 @font-face {
   font-family: 'icon';
-  src:  url('fonts/icon.eot?89d2e1');
-  src:  url('fonts/icon.eot?89d2e1#iefix') format('embedded-opentype'),
-    url('fonts/icon.ttf?89d2e1') format('truetype'),
-    url('fonts/icon.woff?89d2e1') format('woff'),
-    url('fonts/icon.svg?89d2e1#icon') format('svg');
+  src:  url('fonts/icon.eot?gzc388');
+  src:  url('fonts/icon.eot?gzc388#iefix') format('embedded-opentype'),
+    url('fonts/icon.ttf?gzc388') format('truetype'),
+    url('fonts/icon.woff?gzc388') format('woff'),
+    url('fonts/icon.svg?gzc388#icon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
-[class^="v-icon-"], [class*="v-icon-"] {
+[class^="v-icon-"], [class*=" v-icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icon' !important;
   speak: none;
@@ -24,6 +24,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.v-icon-mail:before {
+  content: "\e906";
+}
+.v-icon-notice:before {
+  content: "\e907";
+}
+.v-icon-sms:before {
+  content: "\e908";
+}
+.v-icon-task:before {
+  content: "\e909";
+}
 .v-icon-api:before {
   content: "\e900";
 }
