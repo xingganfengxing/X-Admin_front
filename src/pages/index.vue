@@ -17,7 +17,9 @@
 </template>
 
 <script type="text/ecmascript-6">
+  const COMPONENT_NAME = 'index';
     export default {
+      name: COMPONENT_NAME,
       methods: {
         projectDetail() {
           this.$alert('本项目是为了快速开发中小型后台管理系统而提供的模板，' +

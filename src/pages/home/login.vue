@@ -44,8 +44,10 @@
 
 <script type="text/ecmascript-6">
   import VFloatBall from '../../components/v_float_ball/v_float_ball'
+  const COMPONENT_NAME = 'login';
 
   export default {
+    name: COMPONENT_NAME,
     data() {
       let validateUsername = (rule, value, callback) => {
         if (value === '') {

@@ -8,9 +8,9 @@
     :collapse="isCollapse">
     <el-menu-item index="0" @click="collapse">
       <i v-if="!isCollapse" class="el-icon-d-arrow-left"></i>
-      <i v-if="isCollapse" class="el-icon-d-arrow-right"></i>
+      <i v-else-if="isCollapse" class="el-icon-d-arrow-right"></i>
       <span v-if="!isCollapse" slot="title">收起菜单</span>
-      <span v-if="isCollapse" slot="title">展开菜单</span>
+      <span v-else-if="isCollapse" slot="title">展开菜单</span>
     </el-menu-item>
     <el-submenu index="1">
       <template slot="title">

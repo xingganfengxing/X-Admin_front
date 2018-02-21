@@ -9,6 +9,9 @@
         <v-aside></v-aside>
       </el-aside>
       <el-main class="v-main-area">
+        <div class="v-breadcrumb">
+          <slot name="nav"></slot>
+        </div>
         <slot name="main"></slot>
       </el-main>
     </el-container>
@@ -45,6 +48,11 @@
     height: calc(~"100vh - @{header-height}");
     .v-aside-area {
       background-color: @background-color;
+    }
+    .v-main-area {
+      .v-breadcrumb {
+        padding-bottom: 20px;
+      }
     }
   }
 </style>

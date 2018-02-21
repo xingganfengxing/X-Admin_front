@@ -19,8 +19,10 @@
 
 <script type="text/ecmascript-6">
   import VFloatBall from '../../components/v_float_ball/v_float_ball'
+  const COMPONENT_NAME = 'register';
 
   export default {
+    name: COMPONENT_NAME,
     methods: {},
     components: {
       VFloatBall
