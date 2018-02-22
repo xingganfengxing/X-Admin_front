@@ -12,7 +12,7 @@ import Register from '../../../pages/home/register'
 
 // user
 import Online from '../../../pages/user/online'
-
+import List from '../../../pages/user/list'
 
 Vue.use(VueRouter);
 
@@ -38,9 +38,15 @@ const router = new VueRouter({
       requireAuth: false
     },
     {
-      path: '/online',
+      path: '/user/online',
       name: 'online',
       component: Online,
+      requireAuth: false
+    },
+    {
+      path: '/user/list',
+      name: 'list',
+      component: List,
       requireAuth: false
     }
   ]

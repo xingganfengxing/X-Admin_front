@@ -103,7 +103,11 @@
       };
     },
     methods: {
-      // 提交登录表单
+      /**
+       * 登录提交
+       *
+       * @param formName
+       */
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -111,11 +115,11 @@
               lock: true,
               text: '登录中...'
             });
-            // TODO 存储登录信息，并进行页面跳转
+            // TODO 存储登录信息、初始化相关数据、进行页面跳转
             let _this = this;
             setTimeout(() => {
               loading.close();
-              _this.$router.push({ path: '/online' });
+              _this.$router.push({ path: '/user/online' });
             }, 2000);
           } else {
             this.$message({
@@ -127,6 +131,18 @@
             return false;
           }
         });
+      },
+      /**
+       * 登录初始化工作
+       *
+       * @param name
+       */
+      loginInit(name) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve()
+          }, 1000)
+        })
       }
     },
     components: {

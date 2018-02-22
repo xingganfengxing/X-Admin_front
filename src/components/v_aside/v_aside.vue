@@ -1,24 +1,28 @@
 <!-- 侧边栏组建 -->
 <template>
   <el-menu
-    default-active="1"
+    :default-active="activeMenuItem"
+    :default-openeds="activeSubMenu"
     background-color="#545c64"
     text-color="#fff"
     style="border: none;"
-    :collapse="isCollapse">
-    <el-menu-item index="0" @click="collapse">
+    :collapse="isCollapse"
+    @select="select"
+    unique-opened
+    router>
+    <li @click="collapse" class="el-menu-item v-menu-item">
       <i v-if="!isCollapse" class="el-icon-d-arrow-left"></i>
       <i v-else-if="isCollapse" class="el-icon-d-arrow-right"></i>
       <span v-if="!isCollapse" slot="title">收起菜单</span>
       <span v-else-if="isCollapse" slot="title">展开菜单</span>
-    </el-menu-item>
+    </li>
     <el-submenu index="1">
       <template slot="title">
         <i class="v-icon-common v-icon-user"></i>
         <span>用户管理</span>
       </template>
-      <el-menu-item index="1-1">在线用户</el-menu-item>
-      <el-menu-item index="1-2">用户信息</el-menu-item>
+      <el-menu-item index="1-1" :route="{ path: '/user/online' }">在线用户</el-menu-item>
+      <el-menu-item index="1-2" :route="{ path: '/user/list' }">用户信息</el-menu-item>
     </el-submenu>
     <el-submenu index="2">
       <template slot="title">
@@ -105,32 +109,53 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import * as constants from '../../common/js/global_constants'
+  import { mapGetters } from 'vuex'
+
   const COMPONENT_NAME = 'v_aside';
   export default {
     name: COMPONENT_NAME,
     data() {
       return {
-        isCollapse: false
+
       }
     },
     methods: {
+      select(index, indexPath) {
+        // 更新激活子菜单
+        this.$store.dispatch('updateActiveSubMenu', indexPath);
+        // 更新激活菜单项
+        this.$store.dispatch('updateActiveMenuItem', index);
+      },
       collapse() {
         // 修改侧边栏宽度
         if (this.isCollapse) { // 展开状态
-          this.$store.dispatch('updateAsideWidth', '248px');
+          this.$store.dispatch('updateAsideWidth', constants.ASIDE_ON);
         } else { // 收起状态
-          this.$store.dispatch('updateAsideWidth', '64px');
+          this.$store.dispatch('updateAsideWidth', constants.ASIDE_OFF);
         }
-        this.isCollapse = !this.isCollapse;
       }
+    },
+    computed: {
+      ...mapGetters(['isCollapse', 'activeMenuItem', 'activeSubMenu']),
+
     },
     components: {}
   }
 </script>
 
 <style scoped lang="less" type="text/less" rel="stylesheet/less">
+  @import "../../common/styles/index";
   .v-icon-common {
     font-size: 22px;
     margin-right: 8px;
+  }
+  .v-menu-item {
+    padding-left: 20px;
+    color: @font-color;
+    background-color: @background-color;
+    &:hover {
+      background-color: @active-background-color;
+    }
   }
 </style>

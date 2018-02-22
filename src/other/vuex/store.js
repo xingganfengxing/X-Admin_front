@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Lockr from 'lockr'
 import * as types from './types'
+import * as constants from '../../common/js/global_constants'
 
 Vue.use(Vuex);
 
@@ -9,7 +10,9 @@ Vue.use(Vuex);
 const state = {
   contextPath: 'http://localhost:8080/',
   loginInfo: {},
-  asideWidth: "248px"
+  asideWidth: constants.ASIDE_ON,
+  activeMenuItem: '1-1',
+  activeSubMenu: ['1']
 };
 
 // 对应dispatch方法
@@ -20,6 +23,12 @@ const actions = {
   },
   updateAsideWidth({commit}, asideWidth) {
     commit(types.ASIDE_WIDTH, asideWidth);
+  },
+  updateActiveMenuItem({commit}, activeMenuItem) {
+    commit(types.ACTIVE_MENU_ITEM, activeMenuItem);
+  },
+  updateActiveSubMenu({commit}, activeSubMenu) {
+    commit(types.ACTIVE_SUB_MENU, activeSubMenu);
   }
 };
 
@@ -31,6 +40,12 @@ const mutations = {
   },
   [types.ASIDE_WIDTH] (state, asideWidth) {
     state.asideWidth = asideWidth;
+  },
+  [types.ACTIVE_MENU_ITEM] (state, activeMenuItem) {
+    state.activeMenuItem = activeMenuItem;
+  },
+  [types.ACTIVE_SUB_MENU] (state, activeSubMenu) {
+    state.activeSubMenu = activeSubMenu;
   }
 };
 
@@ -38,7 +53,10 @@ const mutations = {
 const getters = {
   contextPath: state => state.contextPath,
   loginInfo: state => state.loginInfo !== '' ? state.loginInfo : Lockr.get(types.STORE_LOGIN_INFO),
-  asideWidth: state => state.asideWidth
+  asideWidth: state => state.asideWidth,
+  isCollapse: state => state.asideWidth !== constants.ASIDE_ON,
+  activeMenuItem: state => state.activeMenuItem,
+  activeSubMenu: state => state.activeSubMenu
 };
 
 export default new Vuex.Store({
