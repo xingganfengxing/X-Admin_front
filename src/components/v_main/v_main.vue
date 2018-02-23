@@ -5,7 +5,7 @@
       <v-header></v-header>
     </el-header>
     <el-container class="v-content-area">
-      <el-aside :width="$store.state.asideWidth" class="v-aside-area">
+      <el-aside :width="asideWidth" class="v-aside-area">
         <v-aside></v-aside>
       </el-aside>
       <el-main class="v-main-area">
@@ -19,6 +19,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {mapGetters} from 'vuex'
   import VHeader from '../../components/v_header/v_header'
   import VAside from '../../components/v_aside/v_aside'
   const COMPONENT_NAME = 'v_main';
@@ -33,6 +34,9 @@
     components: {
       VHeader,
       VAside
+    },
+    computed: {
+      ...mapGetters(['asideWidth'])
     }
   }
 </script>

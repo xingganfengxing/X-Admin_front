@@ -12,21 +12,24 @@
       default-active="1"
       mode="horizontal"
       background-color="#545c64"
+      active-text-color="#409eff"
       text-color="#fff"
-      active-text-color="#ffd04b" style="float: right;">
+      style="float: right;">
       <el-submenu index="1">
         <template slot="title">
           <img src="../../common/img/avatar.png" class="v-avatar-area" />
-          <span>管理员</span>
+          <span v-text="loginInfo.name"></span>
         </template>
-        <el-menu-item index="3-1">修改信息</el-menu-item>
-        <el-menu-item index="3-2">退出登录</el-menu-item>
+        <el-menu-item index="3-1" @click="update">修改信息</el-menu-item>
+        <el-menu-item index="3-2" @click="exit">退出登录</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import { mapGetters } from 'vuex'
+  import Lockr from 'lockr'
   const COMPONENT_NAME = 'v_header';
 
   export default {
@@ -36,7 +39,18 @@
 
       }
     },
-    methods: {}
+    methods: {
+      update() {
+
+      },
+      exit() {
+        Lockr.flush();
+        this.$router.replace({ path: '/login' })
+      }
+    },
+    computed: {
+      ...mapGetters(['loginInfo'])
+    }
   }
 </script>
 
@@ -78,5 +92,8 @@
     display: inline-block;
     width: @header-height - 10px;
     height: @header-height - 10px;
+    & + span {
+      color: #fff;
+    }
   }
 </style>

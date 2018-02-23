@@ -43,7 +43,10 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import * as constants from '../../common/js/global_constants'
+  import Lockr from 'lockr'
   import VFloatBall from '../../components/v_float_ball/v_float_ball'
+
   const COMPONENT_NAME = 'login';
 
   export default {
@@ -115,12 +118,14 @@
               lock: true,
               text: '登录中...'
             });
-            // TODO 存储登录信息、初始化相关数据、进行页面跳转
             let _this = this;
-            setTimeout(() => {
+            this.login(this.loginForm.username, this.loginForm.password).then((value) => {
               loading.close();
+              _this.loginInit(value);
               _this.$router.push({ path: '/user/online' });
-            }, 2000);
+            }).catch((error) => {
+              console.log(error);
+            });
           } else {
             this.$message({
               message: '校验失败，无法进行登录',
@@ -133,15 +138,31 @@
         });
       },
       /**
-       * 登录初始化工作
+       * 登录初始化
+       *
+       * @param value
+       */
+      loginInit(value) {
+        Lockr.set(constants.LOGIN_INFO, value);
+        Lockr.set(constants.ASIDE, {
+          asideWidth: constants.ASIDE_ON,
+          activeMenuItem: constants.ACTIVE_MENU_ITEM,
+          activeSubMenu: constants.ACTIVE_SUB_MENU
+        });
+      },
+      /**
+       * 登录
        *
        * @param name
+       * @param pass
        */
-      loginInit(name) {
+      login(name, pass) {
         return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            resolve()
-          }, 1000)
+          // TODO 后台登录请求，成功返回resolve()，失败返回reject()
+          resolve({
+            name: name,
+            contextPath: constants.CONTEXT_PATH
+          });
         })
       }
     },

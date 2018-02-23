@@ -8,18 +8,17 @@ Vue.use(Vuex);
 
 // this.$store.state
 const state = {
-  contextPath: 'http://localhost:8080/',
-  loginInfo: {},
-  asideWidth: constants.ASIDE_ON,
-  activeMenuItem: '1-1',
-  activeSubMenu: ['1']
+  loginInfo: '',
+  asideWidth: '',
+  activeMenuItem: '',
+  activeSubMenu: []
 };
 
 // 对应dispatch方法
 // this.$store.dispatch
 const actions = {
-  storeLoginInfo({commit}, loginInfo) {
-    commit(types.STORE_LOGIN_INFO, loginInfo);
+  saveLoginInfo({commit}, loginInfo) {
+    commit(types.LOGIN_INFO, loginInfo);
   },
   updateAsideWidth({commit}, asideWidth) {
     commit(types.ASIDE_WIDTH, asideWidth);
@@ -35,28 +34,37 @@ const actions = {
 // 对应commit方法
 // this.$store.commit
 const mutations = {
-  [types.STORE_LOGIN_INFO] (state, loginInfo) {
+  [types.LOGIN_INFO] (state, loginInfo) {
     state.loginInfo = loginInfo;
+    Lockr.set(constants.LOGIN_INFO, loginInfo);
   },
   [types.ASIDE_WIDTH] (state, asideWidth) {
     state.asideWidth = asideWidth;
+    let aside = Lockr.get(constants.ASIDE);
+    aside.asideWidth = asideWidth;
+    Lockr.set(constants.ASIDE, aside);
   },
   [types.ACTIVE_MENU_ITEM] (state, activeMenuItem) {
     state.activeMenuItem = activeMenuItem;
+    let aside = Lockr.get(constants.ASIDE);
+    aside.activeMenuItem = activeMenuItem;
+    Lockr.set(constants.ASIDE, aside);
   },
   [types.ACTIVE_SUB_MENU] (state, activeSubMenu) {
     state.activeSubMenu = activeSubMenu;
+    let aside = Lockr.get(constants.ASIDE);
+    aside.activeSubMenu = activeSubMenu;
+    Lockr.set(constants.ASIDE, aside);
   }
 };
 
 // this.$store.getters
 const getters = {
-  contextPath: state => state.contextPath,
-  loginInfo: state => state.loginInfo !== '' ? state.loginInfo : Lockr.get(types.STORE_LOGIN_INFO),
-  asideWidth: state => state.asideWidth,
-  isCollapse: state => state.asideWidth !== constants.ASIDE_ON,
-  activeMenuItem: state => state.activeMenuItem,
-  activeSubMenu: state => state.activeSubMenu
+  loginInfo: state => state.loginInfo !== '' ? state.loginInfo : Lockr.get(constants.LOGIN_INFO),
+  asideWidth: state => state.asideWidth !== '' ? state.asideWidth : Lockr.get(constants.ASIDE).asideWidth,
+  isCollapse: (state, getters) => getters.asideWidth  === constants.ASIDE_OFF,
+  activeMenuItem: state => state.activeMenuItem !== '' ? state.activeMenuItem : Lockr.get(constants.ASIDE).activeMenuItem,
+  activeSubMenu: state => state.activeSubMenu.length !== 0 ? state.activeSubMenu : Lockr.get(constants.ASIDE).activeSubMenu
 };
 
 export default new Vuex.Store({
