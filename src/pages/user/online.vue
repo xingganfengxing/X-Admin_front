@@ -13,8 +13,10 @@
         :data="tableData"
         border
         stripe
-        class="v-table"
-        style="width: 100%">
+        style="width: 100%"
+        @select="select"
+        @select-all="selectAll"
+        ref="table">
         <el-table-column
           type="selection"
           width="55">
@@ -89,11 +91,13 @@
       <el-row>
         <el-col :span="8" style="text-align: left;padding-top: 20px">
           <el-button
-            size="small"
-            type="warning">选中清理权限</el-button>
+            size="mini"
+            type="warning"
+            :disabled="isSelectRow">选中清理权限</el-button>
           <el-button
-            size="small"
-            type="danger">选中强制注销</el-button>
+            size="mini"
+            type="danger"
+            :disabled="isSelectRow">选中强制注销</el-button>
         </el-col>
         <el-col :span="8">
           <el-pagination
@@ -118,6 +122,7 @@
     name: COMPONENT_NAME,
     data() {
       return {
+        isSelectRow: true,
         tableData: [
           {
             name: '王小虎',
@@ -185,6 +190,22 @@
       },
       filterForceLogout(value, row) {
         return row.isForceLogout === value;
+      },
+      handleSeeInfo() {
+
+      },
+      handleCleanAuth() {
+
+      },
+      handleForceLogout() {
+
+      },
+      select(selection, row) {
+        console.log(selection);
+        this.$refs.table.toggleRowSelection(row, );
+        this.isSelectRow = false;
+      },
+      selectAll(selection) {
       }
     },
     components: {
@@ -194,6 +215,4 @@
 </script>
 
 <style scoped lang="less" type="text/less" rel="stylesheet/less">
-  .v-table {
-  }
 </style>
