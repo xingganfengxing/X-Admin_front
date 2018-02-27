@@ -28,6 +28,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import * as constants from '../../common/js/global_constants'
   import { mapGetters } from 'vuex'
   import Lockr from 'lockr'
   const COMPONENT_NAME = 'v_header';
@@ -44,7 +45,9 @@
 
       },
       exit() {
-        Lockr.flush();
+        // 清空存储信息
+        Lockr.rm(constants.LOGIN_INFO);
+        Lockr.rm(constants.ASIDE);
         this.$router.replace({ path: '/login' })
       }
     },
