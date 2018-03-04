@@ -105,6 +105,14 @@
       <el-menu-item index="10-3">任务删除</el-menu-item>
       <el-menu-item index="10-4">其他操作</el-menu-item>
     </el-submenu>
+    <el-submenu index="11">
+      <template slot="title">
+        <i class="v-icon-common v-icon-admin"></i>
+        <span>管理员管理</span>
+      </template>
+      <el-menu-item index="11-1">在线管理员</el-menu-item>
+      <el-menu-item index="11-2">管理员信息</el-menu-item>
+    </el-submenu>
   </el-menu>
 </template>
 
