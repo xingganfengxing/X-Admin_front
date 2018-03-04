@@ -1,13 +1,6 @@
 <!-- 在线用户列表 -->
 <template>
-  <v-main>
-    <template slot="nav">
-      <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-        <el-breadcrumb-item>在线用户</el-breadcrumb-item>
-      </el-breadcrumb>
-    </template>
+  <v-main :nav-name-items="['用户管理', '用户信息']">
     <template slot="main">
       <el-table
         :data="tableData"
@@ -22,16 +15,10 @@
           width="55">
         </el-table-column>
         <el-table-column
-          prop="type"
-          label="类型"
-          width="100"
-          :filters="[{ text: '用户', value: '用户' }, { text: '管理员', value: '管理员' }]"
-          :filter-method="filterType">
-          <template slot-scope="scope">
-            <el-tag
-              :type="scope.row.type === '用户' ? 'success' : 'danger'"
-              close-transition>{{scope.row.type}}</el-tag>
-          </template>
+          prop="sessionId"
+          label="会话编号"
+          sortable
+          width="200">
         </el-table-column>
         <el-table-column
           prop="name"
@@ -93,22 +80,21 @@
           <el-button
             size="mini"
             type="warning"
-            :disabled="isSelectRow">选中清理权限</el-button>
+            :disabled="!isExistSelection">选中清理权限</el-button>
           <el-button
             size="mini"
             type="danger"
-            :disabled="isSelectRow">选中强制注销</el-button>
+            :disabled="!isExistSelection">选中强制注销</el-button>
         </el-col>
         <el-col :span="8">
           <el-pagination
             background
             layout="prev, pager, next"
-            :total="1000"
+            :total="tableData.length"
             style="text-align: center;padding-top: 20px">
           </el-pagination>
         </el-col>
       </el-row>
-
     </template>
   </v-main>
 </template>
@@ -122,23 +108,24 @@
     name: COMPONENT_NAME,
     data() {
       return {
-        isSelectRow: true,
+        currentSelection: [],
         tableData: [
           {
+            sessionId: '162564681354',
             name: '王小虎',
             loginTime: '2018-2-21 15:51:26',
             recentRequestTime: '2018-2-21 15:51:26',
             loginIp: '192.168.1.1',
             isForceLogout: 'Y',
-            type: '用户'
           }, {
+            sessionId: '162564681354',
             name: '王小虎',
             loginTime: '2018-2-21 15:51:26',
             recentRequestTime: '2018-2-21 15:51:26',
             loginIp: '192.168.1.1',
             isForceLogout: 'Y',
-            type: '管理员'
           }, {
+            sessionId: '162564681354',
             name: '王小虎',
             loginTime: '2018-2-21 15:51:26',
             recentRequestTime: '2018-2-21 15:51:26',
@@ -146,66 +133,67 @@
             isForceLogout: 'N',
             type: '用户'
           }, {
+            sessionId: '162564681354',
             name: '王小虎',
             loginTime: '2018-2-21 15:51:26',
             recentRequestTime: '2018-2-21 15:51:26',
             loginIp: '192.168.1.1',
             isForceLogout: 'N',
-            type: '管理员'
           }, {
+            sessionId: '162564681354',
             name: '王小虎',
             loginTime: '2018-2-21 15:51:26',
             recentRequestTime: '2018-2-21 15:51:26',
             loginIp: '192.168.1.1',
             isForceLogout: 'N',
-            type: '用户'
           }, {
+            sessionId: '162564681354',
             name: '王小虎',
             loginTime: '2018-2-21 15:51:26',
             recentRequestTime: '2018-2-21 15:51:26',
             loginIp: '192.168.1.1',
             isForceLogout: 'Y',
-            type: '用户'
           }, {
+            sessionId: '162564681354',
             name: '王小虎',
             loginTime: '2018-2-21 15:51:26',
             recentRequestTime: '2018-2-21 15:51:26',
             loginIp: '192.168.1.1',
             isForceLogout: 'N',
-            type: '管理员'
           }, {
+            sessionId: '162564681354',
             name: '王小虎',
             loginTime: '2018-2-21 15:51:26',
             recentRequestTime: '2018-2-21 15:51:26',
             loginIp: '255.255.255.255',
             isForceLogout: 'Y',
-            type: '用户'
           }
         ]
       }
     },
+    computed: {
+      isExistSelection() {
+        return this.currentSelection.length > 0;
+      }
+    },
     methods: {
-      filterType(value, row) {
-        return row.type === value;
-      },
       filterForceLogout(value, row) {
         return row.isForceLogout === value;
       },
-      handleSeeInfo() {
+      handleSeeInfo(index, row) {
 
       },
-      handleCleanAuth() {
+      handleCleanAuth(index, row) {
 
       },
-      handleForceLogout() {
+      handleForceLogout(index, row) {
 
       },
       select(selection, row) {
-        console.log(selection);
-        this.$refs.table.toggleRowSelection(row, );
-        this.isSelectRow = false;
+        this.currentSelection = selection;
       },
       selectAll(selection) {
+        this.currentSelection = selection;
       }
     },
     components: {

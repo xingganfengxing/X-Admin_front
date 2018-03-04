@@ -10,7 +10,12 @@
       </el-aside>
       <el-main class="v-main-area">
         <div class="v-breadcrumb">
-          <slot name="nav"></slot>
+          <slot name="nav">
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+              <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+              <el-breadcrumb-item v-for="itemName in navNameItems">{{itemName}}</el-breadcrumb-item>
+            </el-breadcrumb>
+          </slot>
         </div>
         <slot name="main"></slot>
       </el-main>
@@ -37,6 +42,9 @@
     },
     computed: {
       ...mapGetters(['asideWidth'])
+    },
+    props: {
+      navNameItems: Array
     }
   }
 </script>
