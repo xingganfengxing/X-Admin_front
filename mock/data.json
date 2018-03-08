@@ -1,0 +1,13 @@
+{
+  "admin": {
+    "id": "1",
+    "name": "leaf",
+    "pass": "123456",
+    "phone": "15538306625",
+    "mail": "806569552@qq.com",
+    "age": 18,
+    "sex": "男",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzIjoiM2MwZGM2NzZjMWI5YzA3NyIsIm5hbWUiOiJsZWFmIiwiaWQiOiI0MTAwOTMyNDY5Mzc1NjMxMzYiLCJleHAiOjE1MjA0OTEwODR9.XCIFNyCZuI3b-IvZy63XeKylO28aNPtXEiopfqDMHD8"
+  },
+  "code": "ssss"
+}
