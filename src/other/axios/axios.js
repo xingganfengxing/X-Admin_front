@@ -1,12 +1,13 @@
 import axios from 'axios'
 import qs from 'qs'
 
-axios.defaults.baseURL = "http://localhost:8080/";
-axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://localhost:9000";
+axios.defaults.withCredentials = false;
+let isSerialize = false; // 解决express服务器post无法接收参数bug
 
 // post传参序列化(请求拦截器)
 axios.interceptors.request.use((config) => {
-  if (config.method === 'post') {
+  if (isSerialize && config.method === 'post') {
     config.data = qs.stringify(config.data);
   }
   return config;
@@ -15,11 +16,11 @@ axios.interceptors.request.use((config) => {
 });
 
 // 返回状态判断(响应拦截器)
-axios.interceptors.response.use((res) =>{
-  if(res.data.msg === 'error'){
-    return Promise.reject(res);
+axios.interceptors.response.use((resp) =>{
+  if(resp.data.status === 0){
+    return Promise.reject(resp.data.result);
   }
-  return res;
+  return resp.data.result;
 }, (error) => {
   return Promise.reject(error);
 });

@@ -20,7 +20,7 @@
             <el-form-item label-width="0" prop="verifyCode">
               <el-input class="verify-code-input" type="text" v-model="loginForm.verifyCode" placeholder="请输入验证码" auto-complete="off" clearable></el-input>
               <div class="verify-code-img">
-                <a href="#" title="点击更换验证码">
+                <a href="#" title="点击更换验证码" @click="requestVerifyCode">
                   <img src="../../common/img/verifyCode.png" />
                 </a>
               </div>
@@ -79,11 +79,21 @@
           if (!(/^[a-zA-Z0-9]{4}$/).test(value)) {
             callback(new Error('请确认验证码合法性'));
           } else {
-            callback();
+            this.$http.post("/verify/valid", {
+              data: {
+                code: value
+              }
+            }).then((result) => {
+              if (result) {
+                callback();
+              }
+              callback(new Error('验证码错误'));
+            });
           }
         }, 1000);
       };
       return {
+        isSuccessfulCode: false,
         loginForm: {
           username: '',
           password: '',
@@ -105,6 +115,9 @@
         }
       };
     },
+    created() {
+      this.$nextTick(this.requestVerifyCode);
+    },
     methods: {
       /**
        * 登录提交
@@ -114,17 +127,17 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            const loading = this.$loading({
-              lock: true,
-              text: '登录中...'
-            });
-            let _this = this;
+            const loading = this.$loading({lock: true, text: '登录中...'});
+            // 登录请求
             this.login(this.loginForm.username, this.loginForm.password).then((value) => {
+              this.$refs[formName].resetFields();
+              this.loginInit(value);
               loading.close();
-              _this.loginInit(value);
-              _this.$router.push({ path: '/user/online' });
-            }).catch((error) => {
-              console.log(error);
+              this.$router.replace({ path: '/user/online' });
+            }).catch(() => {
+              this.$refs[formName].resetFields();
+              loading.close();
+              this.$notify.error({title: '系统提示', message: '用户名和密码错误，登录失败', duration: 1500});
             });
           } else {
             this.$message({
@@ -135,6 +148,14 @@
             });
             return false;
           }
+        });
+      },
+      requestVerifyCode() {
+        // 请求验证码
+        this.$http.post("/verify/generate").then((result) => {
+          this.$notify.success({title: '系统提示', message: '验证码' + result + '，请求成功', duration: 2000});
+        }).catch(() => {
+          this.$notify.error({title: '系统提示', message: '验证码请求失败', duration: 1000});
         });
       },
       /**
@@ -158,10 +179,16 @@
        */
       login(name, pass) {
         return new Promise((resolve, reject) => {
-          // TODO 后台登录请求，成功返回resolve()，失败返回reject()
-          resolve({
-            name: name,
-            contextPath: constants.CONTEXT_PATH
+          // 后台登录请求
+          this.$http.post("/admin/login", {
+            data: {
+              username: name,
+              password: pass
+            }
+          }).then((result) => {
+            resolve(result);
+          }).catch((err) => {
+            reject(err);
           });
         })
       }

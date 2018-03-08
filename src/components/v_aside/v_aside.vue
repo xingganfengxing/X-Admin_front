@@ -23,6 +23,7 @@
       </template>
       <el-menu-item index="1-1" :route="{ path: '/user/online' }">在线用户</el-menu-item>
       <el-menu-item index="1-2" :route="{ path: '/user/list' }">用户信息</el-menu-item>
+      <el-menu-item index="1-3">权限分配</el-menu-item>
     </el-submenu>
     <el-submenu index="2">
       <template slot="title">
@@ -63,9 +64,10 @@
         <i class="v-icon-common v-icon-log"></i>
         <span>日志管理</span>
       </template>
-      <el-menu-item index="6-1">用户日志</el-menu-item>
-      <el-menu-item index="6-2">管理员日志</el-menu-item>
-      <el-menu-item index="6-3">系统日志</el-menu-item>
+      <el-menu-item index="6-1">日志配置</el-menu-item>
+      <el-menu-item index="6-2">用户日志</el-menu-item>
+      <el-menu-item index="6-3">管理员日志</el-menu-item>
+      <el-menu-item index="6-4">系统日志</el-menu-item>
     </el-submenu>
     <el-submenu index="7">
       <template slot="title">
@@ -112,6 +114,7 @@
       </template>
       <el-menu-item index="11-1">在线管理员</el-menu-item>
       <el-menu-item index="11-2">管理员信息</el-menu-item>
+      <el-menu-item index="11-3">权限分配</el-menu-item>
     </el-submenu>
   </el-menu>
 </template>

@@ -2,22 +2,22 @@
 <template>
   <el-container direction="vertical">
     <el-header class="v-header-area">
-      <v-header></v-header>
+      <v-header/>
     </el-header>
     <el-container class="v-content-area">
       <el-aside :width="asideWidth" class="v-aside-area">
-        <v-aside></v-aside>
+        <v-aside/>
       </el-aside>
       <el-main class="v-main-area">
         <div class="v-breadcrumb">
           <slot name="nav">
             <el-breadcrumb separator-class="el-icon-arrow-right">
               <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-              <el-breadcrumb-item v-for="itemName in navNameItems">{{itemName}}</el-breadcrumb-item>
+              <el-breadcrumb-item v-for="(itemName, index) in navNameItems" :key="index">{{itemName}}</el-breadcrumb-item>
             </el-breadcrumb>
           </slot>
         </div>
-        <slot name="main"></slot>
+        <slot name="main"/>
       </el-main>
     </el-container>
   </el-container>
