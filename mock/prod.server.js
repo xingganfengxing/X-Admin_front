@@ -12,10 +12,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 // express中间处理跨域问题
 app.use(function(req, resp, next) {
-  resp.header("Access-Control-Allow-Origin", "*");
+  resp.header("Access-Control-Allow-Origin", "http://localhost:8080");
+  resp.header('Access-Control-Allow-Credentials', 'true');
   resp.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   resp.header("Access-Control-Allow-Methods","PUT, POST, GET, DELETE, OPTIONS");
-  resp.header("Content-Type", "application/json;charset=utf-8");
   next();
 });
 
