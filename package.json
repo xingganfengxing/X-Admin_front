@@ -11,7 +11,8 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "build": "node build/build.js",
-    "mock": "node mock/prod.server.js"
+    "mock": "node mock/mock.server.js",
+    "prod": "node mock/prod.server.js"
   },
   "dependencies": {
     "vue": "^2.5.2",
@@ -75,8 +76,7 @@
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.0",
-    "body-parser": "latest"
+    "webpack-merge": "^4.1.0"
   },
   "engines": {
     "node": ">= 6.0.0",
