@@ -17,7 +17,7 @@
       style="float: right;">
       <el-submenu index="1">
         <template slot="title">
-          <img src="../../common/img/avatar.png" class="v-avatar-area" />
+          <img :src="loginInfo.avatar" class="v-avatar-area" />
           <span v-text="loginInfo.name"></span>
         </template>
         <el-menu-item index="3-1" @click="update">修改信息</el-menu-item>
@@ -95,6 +95,7 @@
     display: inline-block;
     width: @header-height - 10px;
     height: @header-height - 10px;
+    border-radius: 50%;
     & + span {
       color: #fff;
     }

@@ -21,7 +21,7 @@
               <el-input class="verify-code-input" type="text" v-model="loginForm.verifyCode" placeholder="请输入验证码" auto-complete="off" clearable></el-input>
               <div class="verify-code-img">
                 <a href="#" title="点击更换验证码" @click="requestVerifyCode">
-                  <img src="../../common/img/verifyCode.png" />
+                  <img :src="verifyCodePic" width="116" height="38" />
                 </a>
               </div>
             </el-form-item>
@@ -94,6 +94,7 @@
       };
       return {
         isSuccessfulCode: false,
+        verifyCodePic: "",
         loginForm: {
           username: '',
           password: '',
@@ -153,7 +154,8 @@
       requestVerifyCode() {
         // 请求验证码
         this.$http.post("/verify/generate").then((result) => {
-          this.$notify.success({title: '系统提示', message: '验证码' + result + '，请求成功', duration: 2000});
+          this.verifyCodePic = result;
+          this.$notify.success({title: '系统提示', message: '验证码请求成功', duration: 1000});
         }).catch(() => {
           this.$notify.error({title: '系统提示', message: '验证码请求失败', duration: 1000});
         });

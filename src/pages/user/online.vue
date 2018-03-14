@@ -39,7 +39,7 @@
           width="160">
         </el-table-column>
         <el-table-column
-          prop="loginIp"
+          prop="loginIP"
           label="登录IP"
           sortable
           width="140">
@@ -48,11 +48,11 @@
           prop="isForceLogout"
           label="是否强制注销"
           width="120"
-          :filters="[{ text: 'Y', value: 'Y' }, { text: 'N', value: 'N' }]"
+          :filters="[{ text: true, value: true }, { text: false, value: false }]"
           :filter-method="filterForceLogout">
           <template slot-scope="scope">
             <el-tag
-              :type="scope.row.isForceLogout === 'Y' ? 'danger' : 'success'"
+              :type="scope.row.isForceLogout ? 'danger' : 'success'"
               close-transition>{{scope.row.isForceLogout}}</el-tag>
           </template>
         </el-table-column>
@@ -65,12 +65,12 @@
             <el-button
               size="small"
               type="warning"
-              :disabled="scope.row.isForceLogout === 'Y'"
+              :disabled="scope.row.isForceLogout"
               @click="handleCleanAuth(scope.$index, scope.row)">清理权限</el-button>
             <el-button
               size="small"
               type="danger"
-              :disabled="scope.row.isForceLogout === 'Y'"
+              :disabled="scope.row.isForceLogout"
               @click="handleForceLogout(scope.$index, scope.row)">强制注销</el-button>
           </template>
         </el-table-column>
@@ -90,7 +90,10 @@
           <el-pagination
             background
             layout="prev, pager, next"
-            :total="tableData.length"
+            :total="pageInfo.total"
+            :page-size="pageInfo.size"
+            :current-page.sync="currentPage"
+            @current-change="getAll(currentPage)"
             style="text-align: center;padding-top: 20px">
           </el-pagination>
         </el-col>
@@ -109,66 +112,9 @@
     data() {
       return {
         currentSelection: [],
-        tableData: [
-          {
-            sessionId: '162564681354',
-            name: '王小虎',
-            loginTime: '2018-2-21 15:51:26',
-            recentRequestTime: '2018-2-21 15:51:26',
-            loginIp: '192.168.1.1',
-            isForceLogout: 'Y',
-          }, {
-            sessionId: '162564681354',
-            name: '王小虎',
-            loginTime: '2018-2-21 15:51:26',
-            recentRequestTime: '2018-2-21 15:51:26',
-            loginIp: '192.168.1.1',
-            isForceLogout: 'Y',
-          }, {
-            sessionId: '162564681354',
-            name: '王小虎',
-            loginTime: '2018-2-21 15:51:26',
-            recentRequestTime: '2018-2-21 15:51:26',
-            loginIp: '192.168.1.1',
-            isForceLogout: 'N',
-            type: '用户'
-          }, {
-            sessionId: '162564681354',
-            name: '王小虎',
-            loginTime: '2018-2-21 15:51:26',
-            recentRequestTime: '2018-2-21 15:51:26',
-            loginIp: '192.168.1.1',
-            isForceLogout: 'N',
-          }, {
-            sessionId: '162564681354',
-            name: '王小虎',
-            loginTime: '2018-2-21 15:51:26',
-            recentRequestTime: '2018-2-21 15:51:26',
-            loginIp: '192.168.1.1',
-            isForceLogout: 'N',
-          }, {
-            sessionId: '162564681354',
-            name: '王小虎',
-            loginTime: '2018-2-21 15:51:26',
-            recentRequestTime: '2018-2-21 15:51:26',
-            loginIp: '192.168.1.1',
-            isForceLogout: 'Y',
-          }, {
-            sessionId: '162564681354',
-            name: '王小虎',
-            loginTime: '2018-2-21 15:51:26',
-            recentRequestTime: '2018-2-21 15:51:26',
-            loginIp: '192.168.1.1',
-            isForceLogout: 'N',
-          }, {
-            sessionId: '162564681354',
-            name: '王小虎',
-            loginTime: '2018-2-21 15:51:26',
-            recentRequestTime: '2018-2-21 15:51:26',
-            loginIp: '255.255.255.255',
-            isForceLogout: 'Y',
-          }
-        ]
+        tableData: [],
+        currentPage: 1,
+        pageInfo: {}
       }
     },
     computed: {
@@ -176,7 +122,32 @@
         return this.currentSelection.length > 0;
       }
     },
+    created() {
+      this.$nextTick(() => {
+        this.getAllPageInfo();
+        this.getAll(this.currentPage);
+      });
+    },
     methods: {
+      getAllPageInfo(){
+        this.$http.get("/user/getAllPageInfo").then((result) => {
+          this.pageInfo = result;
+        }).catch(() => {
+          this.$message.error('加载分页数据错误!');
+        });
+      },
+      getAll(current){
+        this.$http.get("/user/getAll", {
+          params: {
+            current: current,
+            size: 1
+          }
+        }).then((result) => {
+          this.tableData = result;
+        }).catch(() => {
+          this.$message.error('加载数据错误!');
+        });
+      },
       filterForceLogout(value, row) {
         return row.isForceLogout === value;
       },
