@@ -110,6 +110,56 @@ GET /admin/getAllPageInfo
 参见第0条
 ```
 
+### 1.4 清理指定用户权限
+请求：
+```
+POST /admin/clearAuth
+```
+参数：
+```
+name: "leaf"
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": true
+}
+错误:
+{
+  "status": 0,
+  "message": "fail",
+  "result": false
+}
+```
+
+### 1.5 强制注销指定用户
+请求：
+```
+POST /admin/forceLogout
+```
+参数：
+```
+name: "leaf"
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": true
+}
+错误:
+{
+  "status": 0,
+  "message": "fail",
+  "result": false
+}
+```
+
 ## 2. 验证相关请求
 
 ### 2.1 图片验证码
@@ -217,6 +267,33 @@ GET /user/getAllPageInfo
     "size": 12,
     "total": 20,
     "page": 2
+  }
+}
+错误:
+参见第0条
+```
+### 3.4 查看指定用户信息
+请求：
+```
+GET /user/getUserInfo
+```
+参数：
+```
+name: "leaf"
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": {
+    "id": "544213131354582",
+    "name": "leaf”,
+    "avatar": "http://dummyimage.com/50x50/f2e779&text=leaf",
+    "age": 18,
+    "sex": "男",
+    "desc": "为了王者的荣耀!!!",
   }
 }
 错误:

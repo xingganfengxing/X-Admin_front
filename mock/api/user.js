@@ -46,13 +46,35 @@ routers.get('/getAll', (req, resp) => {
 
 /**
  * 获取在线用户数据分页信息
+ *
  */
 routers.get('/getAllPageInfo', (req, resp) => {
   let pageInfo = appData.pageInfo;
   resp.json(utils.response.success(pageInfo));
 });
 
-
+/**
+ * 获取用户信息
+ *
+ */
+routers.get('/getUserInfo', (req, resp) => {
+  let name = req.query.name;
+  let avatar = Mock.Random.image('50x50', Mock.Random.color(), name);
+  Mock.Random.integer(18, 65);
+  Mock.Random.csentence(20, 35);
+  resp.json(Mock.mock({
+    "status": 1,
+    "message": "success",
+    "result": {
+      "id|15": /[0-9]/,
+      "name": name,
+      "avatar": avatar,
+      "age": '@integer(18, 65)',
+      "sex|1": /[男女]/,
+      "desc": '@csentence(20, 35)',
+    }
+  }));
+});
 
 
 module.exports = routers;

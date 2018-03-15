@@ -11,8 +11,7 @@ let Mock = require('mockjs');
 routers.post('/login', (req, resp) => {
   let data = req.body.data;
   let admin = appData.admin;
-  let random = Mock.Random;
-  admin.avatar = random.image('50x50', random.color(), admin.name);
+  admin.avatar = Mock.Random.image('50x50', Mock.Random.color(), admin.name);
   if (data.username === admin.name && data.password === admin.pass) {
     resp.json(utils.response.success(admin));
   } else {
@@ -63,10 +62,31 @@ routers.get('/getAll', (req, resp) => {
 
 /**
  * 获取在线管理员数据分页信息
+ *
  */
 routers.get('/getAllPageInfo', (req, resp) => {
   let pageInfo = appData.pageInfo;
   resp.json(utils.response.success(pageInfo));
+});
+
+/**
+ * 清理用户权限缓存
+ *
+ */
+routers.post('/cleanAuth', (req, resp) => {
+  let data = req.body.data;
+  let result = (data.name !== '' || data.name.length !== 0);
+  resp.json(utils.response.success(result));
+});
+
+/**
+ * 强制用户退出登录
+ *
+ */
+routers.post('/forceLogout', (req, resp) => {
+  let data = req.body.data;
+  let result = (data.name !== '' || data.name.length !== 0);
+  resp.json(utils.response.success(result));
 });
 
 module.exports = routers;

@@ -80,11 +80,13 @@
           <el-button
             size="mini"
             type="warning"
-            :disabled="!isExistSelection">选中清理权限</el-button>
+            :disabled="!isHasSelection"
+            @click="selectCleanAuth(currentSelection)">选中清理权限</el-button>
           <el-button
             size="mini"
             type="danger"
-            :disabled="!isExistSelection">选中强制注销</el-button>
+            :disabled="!isHasSelection"
+            @click="selectForceLogout(currentSelection)">选中强制注销</el-button>
         </el-col>
         <el-col :span="8">
           <el-pagination
@@ -118,7 +120,7 @@
       }
     },
     computed: {
-      isExistSelection() {
+      isHasSelection() {
         return this.currentSelection.length > 0;
       }
     },
@@ -152,19 +154,123 @@
         return row.isForceLogout === value;
       },
       handleSeeInfo(index, row) {
-
+        this.seeInfoRequest(row.name).then((result) => {
+          // 弹窗提示用户信息
+          let html = "<img src='" + result.avatar + "' width='100' height='100' style='border-radius: 50%'/>" +
+            "<p>编号:" + result.id + "</p>" +
+            "<p>昵称:" + result.name + "</p>" +
+            "<p>年龄:" + result.age + "</p>" +
+            "<p>性别:" + result.sex + "</p>" +
+            "<p>介绍:" + result.desc + "</p>";
+          this.$alert(html, '用户' + row.name + '个人信息', {
+            dangerouslyUseHTMLString: true,
+            center: true,
+            showConfirmButton: false
+          });
+        });
       },
       handleCleanAuth(index, row) {
-
+        this.cleanAuthRequest(row.name).then((result) => {
+          if (result) {
+            this.$notify.success({title: '系统提示', message: '清理' + row.name + '权限缓存成功!', duration: 1500, position: 'bottom-right'});
+          } else {
+            this.$notify.error({title: '系统提示', message: '清理' + row.name + '权限缓存失败!', duration: 1000, position: 'bottom-right'});
+          }
+        });
       },
       handleForceLogout(index, row) {
-
+        this.forceLogoutRequest(row.name).then((result) => {
+          if (result) {
+            row.isForceLogout = true;
+            this.$notify.success({title: '系统提示', message: '强制' + row.name + '退出成功!', duration: 1500, position: 'bottom-right'});
+          } else {
+            this.$notify.error({title: '系统提示', message: '强制' + row.name + '退出失败!', duration: 1000, position: 'bottom-right'});
+          }
+        });
+      },
+      selectCleanAuth(selection) {
+        let name = [];
+        selection.forEach((item) => {
+          name.push(item.name);
+        });
+        this.cleanAuthRequest(name).then((result) => {
+          if (result) {
+            this.$notify.success({title: '系统提示', message: '清理所选用户权限缓存成功!', duration: 1500, position: 'bottom-right'});
+            this.cleanSelection();
+          } else {
+            this.$notify.error({title: '系统提示', message: '清理所选用户权限缓存失败!', duration: 1000, position: 'bottom-right'});
+          }
+        })
+      },
+      selectForceLogout(selection) {
+        let name = [];
+        selection.forEach((item) => {
+          if (!item.isForceLogout) {
+            name.push(item.name);
+          }
+        });
+        this.forceLogoutRequest(name).then((result) => {
+          if (result) {
+            selection.forEach((item) => {
+              if (!item.isForceLogout) {
+                item.isForceLogout = true;
+              }
+            });
+            this.cleanSelection();
+            this.$notify.success({title: '系统提示', message: '强制所选用户退出成功!', duration: 1500, position: 'bottom-right'});
+          } else {
+            this.$notify.error({title: '系统提示', message: '强制所选用户退出失败!', duration: 1000, position: 'bottom-right'});
+          }
+        });
+      },
+      cleanSelection() {
+        this.$refs['table'].clearSelection();
+        this.currentSelection = [];
       },
       select(selection, row) {
         this.currentSelection = selection;
       },
       selectAll(selection) {
         this.currentSelection = selection;
+      },
+      seeInfoRequest(name) {
+        return new Promise((resolve, reject) => {
+          this.$http.get("/user/getUserInfo", {
+            params: {
+              name: name
+            }
+          }).then((result) => {
+            resolve(result);
+          }).catch((err) => {
+            reject(err);
+          });
+        })
+      },
+      cleanAuthRequest(name) {
+        return new Promise((resolve, reject) => {
+          this.$http.post("/admin/cleanAuth", {
+            data: {
+              name: name
+            }
+          }).then((result) => {
+            resolve(result);
+          }).catch((err) => {
+            reject(err);
+          });
+        });
+      },
+      forceLogoutRequest(name) {
+        return new Promise((resolve, reject) => {
+          this.$http.post("/admin/forceLogout", {
+            data: {
+              name: name
+            }
+          }).then((result) => {
+            resolve(result);
+          }).catch((err) => {
+            reject(err);
+          });
+        });
       }
     },
     components: {
