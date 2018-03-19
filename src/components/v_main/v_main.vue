@@ -8,7 +8,7 @@
       <el-aside :width="asideWidth" class="v-aside-area">
         <v-aside/>
       </el-aside>
-      <el-main class="v-main-area">
+      <el-main class="v-main-area" style="background-color: #fffffc;">
         <div class="v-breadcrumb">
           <slot name="nav">
             <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -63,7 +63,7 @@
     }
     .v-main-area {
       .v-breadcrumb {
-        padding-bottom: 20px;
+        padding-bottom: @breadcrumb-bottom-padding;
       }
     }
   }
