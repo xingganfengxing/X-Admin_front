@@ -18,7 +18,7 @@
               <el-input type="password" v-model="loginForm.password" placeholder="请输入密码" auto-complete="off" clearable></el-input>
             </el-form-item>
             <el-form-item label-width="0" prop="verifyCode">
-              <el-input class="verify-code-input" type="text" v-model="loginForm.verifyCode" placeholder="请输入验证码" auto-complete="off" clearable></el-input>
+              <el-input class="verify-code-input" type="text" @keyup.enter="submitForm('loginForm')" v-model="loginForm.verifyCode" placeholder="请输入验证码" auto-complete="off" clearable></el-input>
               <div class="verify-code-img">
                 <a href="#" title="点击更换验证码" @click="requestVerifyCode">
                   <img :src="verifyCodePic" width="116" height="38" />
@@ -64,7 +64,7 @@
       let validatePassword = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('密码不能为空'));
-        } else if (!(/^[a-zA-Z0-9]{6,15}$/).test(value)) {
+        } else if (!(/^[a-zA-Z0-9]{5,15}$/).test(value)) {
           callback(new Error('请确认密码合法性'));
         } else {
           callback();
@@ -74,11 +74,11 @@
         if (!value) {
           return callback(new Error('验证码不能为空'));
         }
-        setTimeout(() => {
-          // TODO 请求后台判断验证码是否合法
-          if (!(/^[a-zA-Z0-9]{4}$/).test(value)) {
-            callback(new Error('请确认验证码合法性'));
-          } else {
+        // 请求后台判断验证码是否合法
+        if (!(/^[a-zA-Z0-9]{4}$/).test(value)) {
+          callback(new Error('请确认验证码合法性'));
+        } else {
+          setTimeout(() => {
             this.$http.post("/verify/valid", {
               data: {
                 code: value
@@ -89,8 +89,8 @@
               }
               callback(new Error('验证码错误'));
             });
-          }
-        }, 1000);
+          }, 1000);
+        }
       };
       return {
         isSuccessfulCode: false,
@@ -111,7 +111,7 @@
           }],
           verifyCode: [{
             validator: checkVerifyCode,
-            trigger: 'blur'
+            trigger: 'change'
           }]
         }
       };
@@ -141,12 +141,6 @@
               this.$notify.error({title: '系统提示', message: '用户名和密码错误，登录失败', duration: 1500});
             });
           } else {
-            this.$message({
-              message: '校验失败，无法进行登录',
-              type: 'error',
-              center: true,
-              duration: 1000
-            });
             return false;
           }
         });

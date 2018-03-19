@@ -71,7 +71,6 @@
         if (this.link) {
           let path = this.link['path'];
           let replace = this.link['replace'];
-          console.log(replace)
           if (replace) {
             this.$router.replace({ path : path });
           } else {

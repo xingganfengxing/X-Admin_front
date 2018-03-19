@@ -22,8 +22,8 @@
         <span>用户管理</span>
       </template>
       <el-menu-item index="1-1" :route="{ path: '/user/online' }">在线用户</el-menu-item>
-      <el-menu-item index="1-2" :route="{ path: '/user/list' }">用户信息</el-menu-item>
-      <el-menu-item index="1-3">权限分配</el-menu-item>
+      <el-menu-item index="1-2" :route="{ path: '/user/list' }" >用户信息</el-menu-item>
+      <el-menu-item index="1-3" :route="{ path: '/user/auth' }" >权限分配</el-menu-item>
     </el-submenu>
     <el-submenu index="2">
       <template slot="title">

@@ -95,7 +95,7 @@
             :total="pageInfo.total"
             :page-size="pageInfo.size"
             :current-page.sync="currentPage"
-            @current-change="getAll(currentPage)"
+            @current-change="getAll(currentPage, pageInfo.size)"
             style="text-align: center;padding-top: 20px">
           </el-pagination>
         </el-col>
@@ -126,23 +126,26 @@
     },
     created() {
       this.$nextTick(() => {
-        this.getAllPageInfo();
-        this.getAll(this.currentPage);
+        this.pageInit();
       });
     },
     methods: {
+      pageInit() {
+        this.getAllPageInfo();
+      },
       getAllPageInfo(){
-        this.$http.get("/user/getAllPageInfo").then((result) => {
+        this.$http.get("/user/online/getPage").then((result) => {
           this.pageInfo = result;
+          this.getAll(this.currentPage, this.pageInfo.size);
         }).catch(() => {
           this.$message.error('加载分页数据错误!');
         });
       },
-      getAll(current){
-        this.$http.get("/user/getAll", {
+      getAll(current, size){
+        this.$http.get("/user/online/getAll", {
           params: {
             current: current,
-            size: 1
+            size: size
           }
         }).then((result) => {
           this.tableData = result;
@@ -154,7 +157,7 @@
         return row.isForceLogout === value;
       },
       handleSeeInfo(index, row) {
-        this.seeInfoRequest(row.name).then((result) => {
+        this.seeInfoRequest(row).then((result) => {
           // 弹窗提示用户信息
           let html = "<img src='" + result.avatar + "' width='100' height='100' style='border-radius: 50%'/>" +
             "<p>编号:" + result.id + "</p>" +
@@ -233,11 +236,11 @@
       selectAll(selection) {
         this.currentSelection = selection;
       },
-      seeInfoRequest(name) {
+      seeInfoRequest(row) {
         return new Promise((resolve, reject) => {
-          this.$http.get("/user/getUserInfo", {
+          this.$http.get("/user/getInfo", {
             params: {
-              name: name
+              id: row.id
             }
           }).then((result) => {
             resolve(result);

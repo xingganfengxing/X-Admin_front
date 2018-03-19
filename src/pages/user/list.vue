@@ -23,11 +23,11 @@
           prop="type"
           label="类型"
           width="100"
-          :filters="[{ text: 'Y', value: 'Y' }, { text: 'N', value: 'N' }]"
+          :filters="[{ text: '一级', value: '一级' }, { text: '二级', value: '二级' }, { text: '三级', value: '三级' }]"
           :filter-method="filterType">
           <template slot-scope="scope">
             <el-tag
-              type=""
+              :type="scope.row.type === '一级' ? 'info' : scope.row.type === '二级' ? 'warning' : 'success'"
               close-transition>{{ scope.row.type }}</el-tag>
           </template>
         </el-table-column>
@@ -35,11 +35,11 @@
           prop="status"
           label="状态"
           width="80"
-          :filters="[{ text: 'Y', value: 'Y' }, { text: 'N', value: 'N' }]"
+          :filters="[{ text: '正常', value: '正常' }, { text: '无效', value: '无效' }]"
           :filter-method="filterStatus">
           <template slot-scope="scope">
             <el-tag
-              type=""
+              :type="scope.row.status === '正常' ? 'success' : 'danger'"
               close-transition>{{ scope.row.status }}</el-tag>
           </template>
         </el-table-column>
@@ -50,16 +50,16 @@
           width="140">
         </el-table-column>
         <el-table-column
-          prop="mail"
+          prop="email"
           label="邮箱"
           sortable
-          width="200">
+          width="250">
         </el-table-column>
         <el-table-column
           prop="lastLoginTime"
-          label="登录时间"
+          label="最近登录时间"
           sortable
-          width="160">
+          width="180">
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -83,17 +83,22 @@
           <el-button
             size="mini"
             type="warning"
-            :disabled="!isExistSelection">选中发送短信</el-button>
+            :disabled="!isHasSelection"
+            @click="selectSendMsg(currentSelection)">选中发送短信</el-button>
           <el-button
             size="mini"
             type="danger"
-            :disabled="!isExistSelection">选中发送邮件</el-button>
+            :disabled="!isHasSelection"
+            @click="selectSendMail(currentSelection)">选中发送邮件</el-button>
         </el-col>
         <el-col :span="8">
           <el-pagination
             background
             layout="prev, pager, next"
-            :total="tableData.length"
+            :total="pageInfo.total"
+            :page-size="pageInfo.size"
+            :current-page.sync="currentPage"
+            @current-change="getAll(currentPage, pageInfo.size)"
             style="text-align: center;padding-top: 20px">
           </el-pagination>
         </el-col>
@@ -111,81 +116,45 @@
     data() {
       return {
         currentSelection: [],
-        tableData: [
-          {
-            id: '6621579524316',
-            name: '王小虎',
-            type: '一级用户',
-            status: '正常',
-            phone: '123******23',
-            lastLoginTime: '2018-2-21 15:51:26',
-            mail: '80******@qq.com'
-          }, {
-            id: '6621579524316',
-            name: '王小虎',
-            type: '一级用户',
-            status: '正常',
-            phone: '123******23',
-            lastLoginTime: '2018-2-21 15:51:26',
-            mail: '80******@qq.com'
-          }, {
-            id: '6621579524316',
-            name: '王小虎',
-            type: '一级用户',
-            status: '正常',
-            phone: '123******23',
-            lastLoginTime: '2018-2-21 15:51:26',
-            mail: '80******@qq.com'
-          }, {
-            id: '6621579524316',
-            name: '王小虎',
-            type: '一级用户',
-            status: '正常',
-            phone: '123******23',
-            lastLoginTime: '2018-2-21 15:51:26',
-            mail: '80******@qq.com'
-          }, {
-            id: '6621579524316',
-            name: '王小虎',
-            type: '一级用户',
-            status: '正常',
-            phone: '123******23',
-            lastLoginTime: '2018-2-21 15:51:26',
-            mail: '80******@qq.com'
-          }, {
-            id: '6621579524316',
-            name: '王小虎',
-            type: '一级用户',
-            status: '正常',
-            phone: '123******23',
-            lastLoginTime: '2018-2-21 15:51:26',
-            mail: '80******@qq.com'
-          }, {
-            id: '6621579524316',
-            name: '王小虎',
-            type: '一级用户',
-            status: '正常',
-            phone: '123******23',
-            lastLoginTime: '2018-2-21 15:51:26',
-            mail: '80******@qq.com'
-          }, {
-            id: '6621579524316',
-            name: '王小虎',
-            type: '一级用户',
-            status: '正常',
-            phone: '123******23',
-            lastLoginTime: '2018-2-21 15:51:26',
-            mail: '80******@qq.com'
-          }
-        ]
+        tableData: [],
+        currentPage: 1,
+        pageInfo: {}
       }
     },
     computed: {
-      isExistSelection() {
+      isHasSelection() {
         return this.currentSelection.length > 0;
       }
     },
+    created() {
+      this.$nextTick(() => {
+        this.pageInit();
+      });
+    },
     methods: {
+      pageInit() {
+        this.getAllPageInfo();
+      },
+      getAllPageInfo() {
+        this.$http.get("/user/getPage").then((result) => {
+          this.pageInfo = result;
+          this.getAll(this.currentPage, this.pageInfo.size);
+        }).catch(() => {
+          this.$message.error('加载分页数据错误!');
+        });
+      },
+      getAll(current, size) {
+        this.$http.get("/user/getAll", {
+          params: {
+            current: current,
+            size: size
+          }
+        }).then((result) => {
+          this.tableData = result;
+        }).catch(() => {
+          this.$message.error('加载数据错误!');
+        });
+      },
       filterType(value, row) {
         return row.type === value;
       },
@@ -193,20 +162,58 @@
         return row.status === value;
       },
       handleSeeInfo(index, row) {
-
+        this.seeInfoRequest(row).then((result) => {
+          // 弹窗提示用户信息
+          let html = "<img src='" + result.avatar + "' width='100' height='100' style='border-radius: 50%'/>" +
+            "<p>编号:" + result.id + "</p>" +
+            "<p>昵称:" + result.name + "</p>" +
+            "<p>年龄:" + result.age + "</p>" +
+            "<p>性别:" + result.sex + "</p>" +
+            "<p>介绍:" + result.desc + "</p>";
+          this.$alert(html, '用户' + row.name + '个人信息', {
+            dangerouslyUseHTMLString: true,
+            center: true,
+            showConfirmButton: false
+          });
+        });
       },
       handleSendMsg(index, row) {
-
+        this.$notify.warning({title: '系统提示', message: '发送短信功能暂未开放!', duration: 1500, position: 'bottom-right'});
       },
       handleSendMail(index, row) {
-
+        this.$notify.warning({title: '系统提示', message: '发送邮件功能暂未开放!', duration: 1500, position: 'bottom-right'});
+      },
+      selectSendMsg(selection) {
+        this.$notify.warning({title: '系统提示', message: '发送短信功能暂未开放!', duration: 1500, position: 'bottom-right'});
+        this.cleanSelection();
+      },
+      selectSendMail(selection) {
+        this.$notify.warning({title: '系统提示', message: '发送邮件功能暂未开放!', duration: 1500, position: 'bottom-right'});
+        this.cleanSelection();
+      },
+      cleanSelection() {
+        this.$refs['table'].clearSelection();
+        this.currentSelection = [];
       },
       select(selection, row) {
         this.currentSelection = selection;
       },
       selectAll(selection) {
         this.currentSelection = selection;
-      }
+      },
+      seeInfoRequest(row) {
+        return new Promise((resolve, reject) => {
+          this.$http.get("/user/getInfo", {
+            params: {
+              id: row.id
+            }
+          }).then((result) => {
+            resolve(result);
+          }).catch((err) => {
+            reject(err);
+          });
+        })
+      },
     },
     components: {
       VMain

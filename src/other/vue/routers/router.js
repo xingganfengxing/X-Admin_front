@@ -7,12 +7,13 @@ import Object from '../../../tools/object/index'
 import Index from '../../../pages/index'
 
 // home
-import Login from '../../../pages/home/login'
-import Register from '../../../pages/home/register'
+import Home_Login from '../../../pages/home/login'
+import Home_Register from '../../../pages/home/register'
 
 // user
-import Online from '../../../pages/user/online'
-import List from '../../../pages/user/list'
+import User_Online from '../../../pages/user/online'
+import User_List from '../../../pages/user/list'
+import User_Auth from '../../../pages/user/auth'
 
 Vue.use(VueRouter);
 
@@ -27,26 +28,32 @@ const router = new VueRouter({
     },
     {
       path: '/login',
-      name: 'login',
-      component: Login,
+      name: 'home_login',
+      component: Home_Login,
       requireAuth: false
     },
     {
       path: '/register',
-      name: 'register',
-      component: Register,
+      name: 'home_register',
+      component: Home_Register,
       requireAuth: false
     },
     {
       path: '/user/online',
-      name: 'online',
-      component: Online,
+      name: 'user_online',
+      component: User_Online,
       requireAuth: false
     },
     {
       path: '/user/list',
-      name: 'list',
-      component: List,
+      name: 'user_list',
+      component: User_List,
+      requireAuth: false
+    },
+    {
+      path: '/user/auth',
+      name: 'user_auth',
+      component: User_Auth,
       requireAuth: false
     }
   ]
