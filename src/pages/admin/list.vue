@@ -3,8 +3,8 @@
     <div class="v-breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item>首页</el-breadcrumb-item>
-        <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/user/list' }">用户列表</el-breadcrumb-item>
+        <el-breadcrumb-item>管理员管理</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/user/list' }">管理员列表</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <el-table
@@ -21,9 +21,9 @@
       </el-table-column>
       <el-table-column
         prop="name"
-        label="用户名"
+        label="管理员名"
         sortable
-        width="100">
+        width="120">
       </el-table-column>
       <el-table-column
         prop="type"
@@ -71,16 +71,21 @@
         <template slot-scope="scope">
           <el-button
             size="small"
-            type="success"
+            type="warning"
             @click="handleSeeInfo(scope.$index, scope.row)">查看信息</el-button>
           <el-button
             size="small"
-            type="warning"
+            type="success"
             @click="handleSendMsg(scope.$index, scope.row)">发送短信</el-button>
           <el-button
             size="small"
-            type="danger"
+            type="success"
             @click="handleSendMail(scope.$index, scope.row)">发送邮件</el-button>
+          <el-button
+            size="small"
+            type="danger"
+            :disabled="scope.row.status !== '正常'"
+            @click="handleLockAdmin(scope.$index, scope.row)">锁定管理员</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -88,14 +93,19 @@
       <el-col :span="8" style="text-align: left;padding-top: 20px">
         <el-button
           size="mini"
-          type="warning"
+          type="success"
           :disabled="!isHasSelection"
           @click="selectSendMsg(currentSelection)">选中发送短信</el-button>
         <el-button
           size="mini"
-          type="danger"
+          type="success"
           :disabled="!isHasSelection"
           @click="selectSendMail(currentSelection)">选中发送邮件</el-button>
+        <el-button
+          size="mini"
+          type="danger"
+          :disabled="!isHasSelection"
+          @click="selectLockAdmin(currentSelection)">选中锁定管理员</el-button>
       </el-col>
       <el-col :span="8">
         <el-pagination
@@ -141,7 +151,7 @@
         this.getAllPageInfo();
       },
       getAllPageInfo() {
-        this.$http.get("/user/getPage").then((result) => {
+        this.$http.get("/admin/getPage").then((result) => {
           this.pageInfo = result;
           this.getAll(this.currentPage, this.pageInfo.size);
         }).catch(() => {
@@ -149,7 +159,7 @@
         });
       },
       getAll(current, size) {
-        this.$http.get("/user/getAll", {
+        this.$http.get("/admin/getAll", {
           params: {
             current: current,
             size: size
@@ -168,18 +178,17 @@
       },
       handleSeeInfo(index, row) {
         this.seeInfoRequest(row).then((result) => {
-          // 弹窗提示用户信息
+          // 弹窗提示管理员信息
           let html = "<img src='" + result.avatar + "' width='100' height='100' style='border-radius: 50%'/>" +
             "<p>编号:" + result.id + "</p>" +
             "<p>昵称:" + result.name + "</p>" +
             "<p>年龄:" + result.age + "</p>" +
             "<p>性别:" + result.sex + "</p>" +
             "<p>介绍:" + result.desc + "</p>";
-          this.$alert(html, '用户' + row.name + '个人信息', {
+          this.$alert(html, '管理员' + row.name + '个人信息', {
             dangerouslyUseHTMLString: true,
             center: true,
-            showConfirmButton: false,
-            callback: () => {}
+            showConfirmButton: false
           });
         });
       },
@@ -189,12 +198,19 @@
       handleSendMail(index, row) {
         this.$notify.warning({title: '系统提示', message: '发送邮件功能暂未开放!', duration: 1500, position: 'bottom-right'});
       },
+      handleLockAdmin(index, row) {
+        this.$notify.warning({title: '系统提示', message: '锁定管理员功能暂未开放!', duration: 1500, position: 'bottom-right'});
+      },
       selectSendMsg(selection) {
         this.$notify.warning({title: '系统提示', message: '发送短信功能暂未开放!', duration: 1500, position: 'bottom-right'});
         this.cleanSelection();
       },
       selectSendMail(selection) {
         this.$notify.warning({title: '系统提示', message: '发送邮件功能暂未开放!', duration: 1500, position: 'bottom-right'});
+        this.cleanSelection();
+      },
+      selectLockAdmin(selection) {
+        this.$notify.warning({title: '系统提示', message: '锁定管理员功能暂未开放!', duration: 1500, position: 'bottom-right'});
         this.cleanSelection();
       },
       cleanSelection() {
@@ -209,7 +225,7 @@
       },
       seeInfoRequest(row) {
         return new Promise((resolve, reject) => {
-          this.$http.get("/user/getInfo", {
+          this.$http.get("/admin/getInfo", {
             params: {
               id: row.id
             }

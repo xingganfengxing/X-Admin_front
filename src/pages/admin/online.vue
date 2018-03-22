@@ -1,11 +1,11 @@
-<!-- 在线用户列表 -->
+<!-- 在线管理员列表 -->
 <template>
   <div>
     <div class="v-breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item>首页</el-breadcrumb-item>
-        <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/user/list' }">在线用户</el-breadcrumb-item>
+        <el-breadcrumb-item>管理员管理</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/user/list' }">在线管理员</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <el-table
@@ -28,9 +28,9 @@
       </el-table-column>
       <el-table-column
         prop="name"
-        label="用户名"
+        label="管理员名"
         sortable
-        width="100">
+        width="120">
       </el-table-column>
       <el-table-column
         prop="loginTime"
@@ -66,11 +66,11 @@
         <template slot-scope="scope">
           <el-button
             size="small"
-            type="success"
+            type="warning"
             @click="handleSeeInfo(scope.$index, scope.row)">查看信息</el-button>
           <el-button
             size="small"
-            type="warning"
+            type="success"
             :disabled="scope.row.isForceLogout"
             @click="handleCleanAuth(scope.$index, scope.row)">清理权限</el-button>
           <el-button
@@ -85,7 +85,7 @@
       <el-col :span="8" style="text-align: left;padding-top: 20px">
         <el-button
           size="mini"
-          type="warning"
+          type="success"
           :disabled="!isHasSelection"
           @click="selectCleanAuth(currentSelection)">选中清理权限</el-button>
         <el-button
@@ -139,7 +139,7 @@
         this.getAllPageInfo();
       },
       getAllPageInfo(){
-        this.$http.get("/user/online/getPage").then((result) => {
+        this.$http.get("/admin/online/getPage").then((result) => {
           this.pageInfo = result;
           this.getAll(this.currentPage, this.pageInfo.size);
         }).catch(() => {
@@ -147,7 +147,7 @@
         });
       },
       getAll(current, size){
-        this.$http.get("/user/online/getAll", {
+        this.$http.get("/admin/online/getAll", {
           params: {
             current: current,
             size: size
@@ -163,14 +163,14 @@
       },
       handleSeeInfo(index, row) {
         this.seeInfoRequest(row).then((result) => {
-          // 弹窗提示用户信息
+          // 弹窗提示管理员信息
           let html = "<img src='" + result.avatar + "' width='100' height='100' style='border-radius: 50%'/>" +
             "<p>编号:" + result.id + "</p>" +
             "<p>昵称:" + result.name + "</p>" +
             "<p>年龄:" + result.age + "</p>" +
             "<p>性别:" + result.sex + "</p>" +
             "<p>介绍:" + result.desc + "</p>";
-          this.$alert(html, '用户' + row.name + '个人信息', {
+          this.$alert(html, '管理员' + row.name + '个人信息', {
             dangerouslyUseHTMLString: true,
             center: true,
             showConfirmButton: false
@@ -197,27 +197,27 @@
         });
       },
       selectCleanAuth(selection) {
-        let id = [];
+        let name = [];
         selection.forEach((item) => {
-          id.push(item.id);
+          name.push(item.name);
         });
-        this.cleanAuthRequest(id).then((result) => {
+        this.cleanAuthRequest(name).then((result) => {
           if (result) {
-            this.$notify.success({title: '系统提示', message: '清理所选用户权限缓存成功!', duration: 1500, position: 'bottom-right'});
+            this.$notify.success({title: '系统提示', message: '清理所选管理员权限缓存成功!', duration: 1500, position: 'bottom-right'});
             this.cleanSelection();
           } else {
-            this.$notify.error({title: '系统提示', message: '清理所选用户权限缓存失败!', duration: 1000, position: 'bottom-right'});
+            this.$notify.error({title: '系统提示', message: '清理所选管理员权限缓存失败!', duration: 1000, position: 'bottom-right'});
           }
         })
       },
       selectForceLogout(selection) {
-        let id = [];
+        let name = [];
         selection.forEach((item) => {
           if (!item.isForceLogout) {
-            id.push(item.id);
+            name.push(item.name);
           }
         });
-        this.forceLogoutRequest(id).then((result) => {
+        this.forceLogoutRequest(name).then((result) => {
           if (result) {
             selection.forEach((item) => {
               if (!item.isForceLogout) {
@@ -225,9 +225,9 @@
               }
             });
             this.cleanSelection();
-            this.$notify.success({title: '系统提示', message: '强制所选用户退出成功!', duration: 1500, position: 'bottom-right'});
+            this.$notify.success({title: '系统提示', message: '强制所选管理员退出成功!', duration: 1500, position: 'bottom-right'});
           } else {
-            this.$notify.error({title: '系统提示', message: '强制所选用户退出失败!', duration: 1000, position: 'bottom-right'});
+            this.$notify.error({title: '系统提示', message: '强制所选管理员退出失败!', duration: 1000, position: 'bottom-right'});
           }
         });
       },
@@ -243,7 +243,7 @@
       },
       seeInfoRequest(row) {
         return new Promise((resolve, reject) => {
-          this.$http.get("/user/getInfo", {
+          this.$http.get("/admin/getInfo", {
             params: {
               id: row.id
             }
@@ -254,11 +254,11 @@
           });
         })
       },
-      cleanAuthRequest(id) {
+      cleanAuthRequest(name) {
         return new Promise((resolve, reject) => {
-          this.$http.post("/user/cleanAuth", {
+          this.$http.post("/admin/cleanAuth", {
             data: {
-              id: [id]
+              name: name
             }
           }).then((result) => {
             resolve(result);
@@ -267,11 +267,11 @@
           });
         });
       },
-      forceLogoutRequest(id) {
+      forceLogoutRequest(name) {
         return new Promise((resolve, reject) => {
-          this.$http.post("/user/forceLogout", {
+          this.$http.post("/admin/forceLogout", {
             data: {
-              id: [id]
+              name: name
             }
           }).then((result) => {
             resolve(result);

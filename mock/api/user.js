@@ -21,6 +21,7 @@ routers.get('/online/getAll', (req, resp) => {
       "message": "success",
       "result|12": [{
         "sessionId|15": /[0-9]/,
+        "id|15": /[0-9]/,
         "name": "@last",
         "loginTime": '@datetime("yyyy-MM-dd HH:mm:ss")',
         "recentRequestTime": '@datetime("yyyy-MM-dd HH:mm:ss")',
@@ -34,6 +35,7 @@ routers.get('/online/getAll', (req, resp) => {
       "message": "success",
       "result|8": [{
         "sessionId|15": /[0-9]/,
+        "id|15": /[0-9]/,
         "name": "@last",
         "loginTime": '@datetime("yyyy-MM-dd HH:mm:ss")',
         "recentRequestTime": '@datetime("yyyy-MM-dd HH:mm:ss")',
@@ -217,6 +219,26 @@ routers.get('/getResources', (req, resp) => {
       "type": /[0-4]/
     }]
   }));
+});
+
+/**
+ * 清理用户权限缓存
+ *
+ */
+routers.post('/cleanAuth', (req, resp) => {
+  let data = req.body.data;
+  let result = data.id.length !== 0;
+  resp.json(utils.response.success(result));
+});
+
+/**
+ * 强制用户退出登录
+ *
+ */
+routers.post('/forceLogout', (req, resp) => {
+  let data = req.body.data;
+  let result = data.id.length !== 0;
+  resp.json(utils.response.success(result));
 });
 
 module.exports = routers;

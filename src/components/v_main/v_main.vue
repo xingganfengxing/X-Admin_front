@@ -8,15 +8,7 @@
       <el-aside :width="asideWidth" class="v-aside-area">
         <v-aside/>
       </el-aside>
-      <el-main class="v-main-area" style="background-color: #fffffc;">
-        <div class="v-breadcrumb">
-          <slot name="nav">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-              <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-              <el-breadcrumb-item v-for="(itemName, index) in navNameItems" :key="index">{{itemName}}</el-breadcrumb-item>
-            </el-breadcrumb>
-          </slot>
-        </div>
+      <el-main class="v-main-area">
         <slot name="main"/>
       </el-main>
     </el-container>
@@ -49,7 +41,7 @@
   }
 </script>
 
-<style scoped lang="less" type="text/less" rel="stylesheet/less">
+<style lang="less" type="text/less" rel="stylesheet/less">
   @import "../../common/styles/index";
 
   .v-header-area {
@@ -62,6 +54,7 @@
       background-color: @background-color;
     }
     .v-main-area {
+      background-color: #fffff4;
       .v-breadcrumb {
         padding-bottom: @breadcrumb-bottom-padding;
       }

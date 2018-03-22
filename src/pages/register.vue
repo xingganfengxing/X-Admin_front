@@ -2,7 +2,7 @@
   <el-container>
     <el-header height="30%" class="v-header-area">
       <router-link :to="{ path: '/' }">
-        <img src="../../common/img/logo.png">
+        <img src="../common/img/logo.png">
       </router-link>
       <h3>注册</h3>
     </el-header>
@@ -18,7 +18,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import VFloatBall from '../../components/v_float_ball/v_float_ball'
+  import VFloatBall from '../components/v_float_ball/v_float_ball'
   const COMPONENT_NAME = 'register';
 
   export default {
@@ -31,7 +31,7 @@
 </script>
 
 <style scoped lang="less" type="text/less" rel="stylesheet/less">
-  @import "../../common/styles/index";
+  @import "../common/styles/index";
 
   @verify-code-input-width: 70%;
   @verify-code-input-height: 40px;

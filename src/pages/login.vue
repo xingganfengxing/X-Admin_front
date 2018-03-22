@@ -2,7 +2,7 @@
   <el-container>
     <el-header height="30%" class="v-header-area">
       <router-link :to="{ path: '/' }">
-        <img src="../../common/img/logo.png">
+        <img src="../common/img/logo.png">
       </router-link>
       <h3>登录</h3>
     </el-header>
@@ -18,7 +18,7 @@
               <el-input type="password" v-model="loginForm.password" placeholder="请输入密码" auto-complete="off" clearable></el-input>
             </el-form-item>
             <el-form-item label-width="0" prop="verifyCode">
-              <el-input class="verify-code-input" type="text" @keyup.enter="submitForm('loginForm')" v-model="loginForm.verifyCode" placeholder="请输入验证码" auto-complete="off" clearable></el-input>
+              <el-input class="verify-code-input" type="text" @keyup.enter.native="submitForm('loginForm')" v-model="loginForm.verifyCode" placeholder="请输入验证码" auto-complete="off" clearable></el-input>
               <div class="verify-code-img">
                 <a href="#" title="点击更换验证码" @click="requestVerifyCode">
                   <img :src="verifyCodePic" width="116" height="38" />
@@ -43,9 +43,9 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import * as constants from '../../common/js/global_constants'
+  import * as constants from '../common/js/global_constants'
   import Lockr from 'lockr'
-  import VFloatBall from '../../components/v_float_ball/v_float_ball'
+  import VFloatBall from '../components/v_float_ball/v_float_ball'
 
   const COMPONENT_NAME = 'login';
 
@@ -196,7 +196,7 @@
 </script>
 
 <style scoped lang="less" type="text/less" rel="stylesheet/less">
-  @import "../../common/styles/index";
+  @import "../common/styles/index";
 
   @verify-code-input-width: 70%;
   @verify-code-input-height: 40px;

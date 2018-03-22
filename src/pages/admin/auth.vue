@@ -3,14 +3,14 @@
     <div class="v-breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item>首页</el-breadcrumb-item>
-        <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+        <el-breadcrumb-item>管理员管理</el-breadcrumb-item>
         <el-breadcrumb-item :to="{ path: '/user/list' }">权限分配</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <el-row :gutter="20">
       <el-col :span="17">
         <div class="left-wrapper">
-          <v-box title="用户列表信息">
+          <v-box title="管理员列表信息">
             <template slot="main">
               <el-table
                 :data="tableData"
@@ -21,7 +21,7 @@
                 ref="table">
                 <el-table-column
                   prop="name"
-                  label="用户名"
+                  label="管理员名"
                   align="center"
                   sortable>
                 </el-table-column>
@@ -203,7 +203,7 @@
       loadRoles() {
         this.$http.get("/role/getList", {
           params: {
-            type: 1
+            type: 2
           }
         }).then((result) => {
           this.roles = result;
@@ -212,7 +212,7 @@
         });
       },
       getAllPageInfo() {
-        this.$http.get("/user/getPage").then((result) => {
+        this.$http.get("/admin/getPage").then((result) => {
           this.pageInfo = result;
           this.getAll(this.currentPage, this.pageInfo.size);
         }).catch(() => {
@@ -250,7 +250,7 @@
       },
       roleAdd(){
         if (this.addRoleForm.region !== '') {
-          this.$http.put("/user/addRole", {
+          this.$http.put("/admin/addRole", {
             data: {
               userId: this.currentRow.id,
               roleId: this.addRoleForm.region
@@ -267,12 +267,12 @@
         this.addRoleDialogFormVisible = false;
       },
       roleRemove(index, row) {
-        this.$confirm('你确定删除用户' + this.currentRow.name + '的"' + row.name + '"角色吗?', '提示', {
+        this.$confirm('你确定删除管理员' + this.currentRow.name + '的"' + row.name + '"角色吗?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$http.delete("/user/removeRole", {
+          this.$http.delete("/admin/removeRole", {
             data: {
               userId: this.currentRow.id,
               roleId: row.id
@@ -300,7 +300,7 @@
         this.resourceRequest(this.currentRow);
       },
       roleRequest(row) {
-        this.$http.get("/user/getRoles", {
+        this.$http.get("/admin/getRoles", {
           params: {
             id: row.id
           }
@@ -311,7 +311,7 @@
         });
       },
       permRequest(row) {
-        this.$http.get("/user/getPerms", {
+        this.$http.get("/admin/getPerms", {
           params: {
             id: row.id
           }
@@ -322,7 +322,7 @@
         });
       },
       resourceRequest(row) {
-        this.$http.get("/user/getResources", {
+        this.$http.get("/admin/getResources", {
           params: {
             id: row.id
           }

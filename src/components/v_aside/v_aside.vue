@@ -30,9 +30,9 @@
         <i class="v-icon-common v-icon-auth"></i>
         <span>权限管理</span>
       </template>
-      <el-menu-item index="2-1">权限配置</el-menu-item>
-      <el-menu-item index="2-2">角色配置</el-menu-item>
-      <el-menu-item index="2-3">资源配置</el-menu-item>
+      <el-menu-item index="2-1" :route="{ path: '/auth/perm' }" >权限配置</el-menu-item>
+      <el-menu-item index="2-2" :route="{ path: '/auth/role' }">角色配置</el-menu-item>
+      <el-menu-item index="2-3" :route="{ path: '/auth/resource' }">资源配置</el-menu-item>
     </el-submenu>
     <el-submenu index="3">
       <template slot="title">
@@ -112,9 +112,9 @@
         <i class="v-icon-common v-icon-admin"></i>
         <span>管理员管理</span>
       </template>
-      <el-menu-item index="11-1">在线管理员</el-menu-item>
-      <el-menu-item index="11-2">管理员信息</el-menu-item>
-      <el-menu-item index="11-3">权限分配</el-menu-item>
+      <el-menu-item index="11-1" :route="{ path: '/admin/online'}">在线管理员</el-menu-item>
+      <el-menu-item index="11-2" :route="{ path: '/admin/list'}">管理员信息</el-menu-item>
+      <el-menu-item index="11-3" :route="{ path: '/admin/auth'}">权限分配</el-menu-item>
     </el-submenu>
   </el-menu>
 </template>
