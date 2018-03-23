@@ -105,7 +105,7 @@
           size="mini"
           type="danger"
           :disabled="!isHasSelection"
-          @click="selectLockAdmin(currentSelection)">选中锁定管理员</el-button>
+          @click="selectLockAdmin(currentSelection)">锁定选中管理员</el-button>
       </el-col>
       <el-col :span="8">
         <el-pagination

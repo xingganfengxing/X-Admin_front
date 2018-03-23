@@ -81,6 +81,12 @@
             size="small"
             type="danger"
             @click="handleSendMail(scope.$index, scope.row)">发送邮件</el-button>
+          <el-button
+            size="small"
+            type="danger"
+            :disabled="scope.row.status !== '正常'"
+            @click="handleLockUser(scope.$index, scope.row)">锁定用户</el-button>
+
         </template>
       </el-table-column>
     </el-table>
@@ -96,6 +102,11 @@
           type="danger"
           :disabled="!isHasSelection"
           @click="selectSendMail(currentSelection)">选中发送邮件</el-button>
+        <el-button
+          size="mini"
+          type="danger"
+          :disabled="!isHasSelection"
+          @click="selectLockUser(currentSelection)">锁定选中用户</el-button>
       </el-col>
       <el-col :span="8">
         <el-pagination
@@ -189,12 +200,19 @@
       handleSendMail(index, row) {
         this.$notify.warning({title: '系统提示', message: '发送邮件功能暂未开放!', duration: 1500, position: 'bottom-right'});
       },
+      handleLockUser(index, row) {
+        this.$notify.warning({title: '系统提示', message: '锁定用户功能暂未开放!', duration: 1500, position: 'bottom-right'});
+      },
       selectSendMsg(selection) {
         this.$notify.warning({title: '系统提示', message: '发送短信功能暂未开放!', duration: 1500, position: 'bottom-right'});
         this.cleanSelection();
       },
       selectSendMail(selection) {
         this.$notify.warning({title: '系统提示', message: '发送邮件功能暂未开放!', duration: 1500, position: 'bottom-right'});
+        this.cleanSelection();
+      },
+      selectLockUser(selection) {
+        this.$notify.warning({title: '系统提示', message: '锁定用户功能暂未开放!', duration: 1500, position: 'bottom-right'});
         this.cleanSelection();
       },
       cleanSelection() {
