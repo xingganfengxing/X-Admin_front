@@ -18,6 +18,10 @@
   }
 </script>
 
-<style scoped lang="less" type="text/less" rel="stylesheet/less">
+<style lang="less" type="text/less" rel="stylesheet/less">
   @import "../../common/styles/index";
+
+  .left-wrapper, .right-wrapper {
+    height: calc(~"100vh - (@{breadcrumb-bottom-padding} * 3 + @{breadcrumb-height} + @{header-height})");
+  }
 </style>

@@ -76,7 +76,7 @@
       <el-col :span="7">
         <div class="right-wrapper">
           <div>
-            <v-box :title="currentRow.name + '角色列表'" header-bg-color="#67C23A" :is-show-add="true" @on-add-click="addRoleDialogFormVisible = true;addRoleForm.region = '';">
+            <v-box :title="currentRow.name + '角色列表'" :header-bg-color="defaultColors[1]" :is-show-add="true" @on-add-click="addRoleDialogFormVisible = true;addRoleForm.region = '';">
               <template slot="main">
                 <el-table
                   :data="currentRoles"
@@ -106,7 +106,7 @@
             </v-box>
           </div>
           <div>
-            <v-box :title="currentRow.name + '权限列表'" header-bg-color="#E6A23C">
+            <v-box :title="currentRow.name + '权限列表'" :header-bg-color="defaultColors[2]">
               <template slot="main">
                 <el-table
                   :data="currentPerms"
@@ -125,7 +125,7 @@
             </v-box>
           </div>
           <div>
-            <v-box :title="currentRow.name + '资源列表'" header-bg-color="#909399">
+            <v-box :title="currentRow.name + '资源列表'" :header-bg-color="defaultColors[3]">
               <template slot="main">
                 <el-table
                   :data="currentResources"
@@ -170,6 +170,7 @@
 <script type="text/ecmascript-6">
   import VMain from '../../components/v_main/v_main'
   import VBox from '../../components/v_box/v_box'
+  import * as constants from '../../common/js/global_constants'
 
   const COMPONENT_NAME = 'auth';
   export default {
@@ -187,7 +188,8 @@
         roles: [],
         addRoleForm: {
           region: ''
-        }
+        },
+        defaultColors: constants.DEFAULT_COLORS
       }
     },
     created() {
