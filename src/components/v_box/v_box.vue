@@ -5,7 +5,10 @@
       <span class="v-box-header-title" v-text="title"></span>
       <el-badge class="v-box-header-badge" v-if="isShowBadge" :value="badgeValue" ></el-badge>
       <label v-if="isShowAdd"  class="v-box-header-icon">
-        <i @click="clickAdd" class="el-icon-circle-plus-outline"></i>
+        <i @click="clickAdd" class="el-icon-circle-plus-outline" title="添加"></i>
+      </label>
+      <label v-if="isShowRefresh"  class="v-box-header-icon">
+        <i @click="clickRefresh" class="el-icon-refresh" title="刷新"></i>
       </label>
     </div>
     <div class="v-box-main">
@@ -50,6 +53,9 @@
       },
       clickAdd() {
         this.isShowAdd && this.$emit('on-add-click');
+      },
+      clickRefresh () {
+        this.isShowRefresh && this.$emit('on-add-refresh');
       }
     },
     props: {
@@ -76,6 +82,10 @@
       isShowAdd: {
         type: Boolean,
         default: false
+      },
+      isShowRefresh: {
+        type: Boolean,
+        default: false
       }
     }
   }
@@ -92,6 +102,7 @@
     height: 100%;
     background-color: #fff;
     border-radius: @box-border-radius;
+    overflow: hidden;
   }
   .v-box-header {
     position: relative;
