@@ -66,11 +66,11 @@
         <template slot-scope="scope">
           <el-button
             size="small"
-            type="success"
+            type="warning"
             @click="handleSeeInfo(scope.$index, scope.row)">查看信息</el-button>
           <el-button
             size="small"
-            type="warning"
+            type="success"
             :disabled="scope.row.isForceLogout"
             @click="handleCleanAuth(scope.$index, scope.row)">清理权限</el-button>
           <el-button
@@ -85,7 +85,7 @@
       <el-col :span="8" style="text-align: left;padding-top: 20px">
         <el-button
           size="mini"
-          type="warning"
+          type="success"
           :disabled="!isHasSelection"
           @click="selectCleanAuth(currentSelection)">选中清理权限</el-button>
         <el-button

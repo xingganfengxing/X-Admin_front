@@ -71,15 +71,15 @@
         <template slot-scope="scope">
           <el-button
             size="small"
-            type="success"
+            type="warning"
             @click="handleSeeInfo(scope.$index, scope.row)">查看信息</el-button>
           <el-button
             size="small"
-            type="warning"
+            type="success"
             @click="handleSendMsg(scope.$index, scope.row)">发送短信</el-button>
           <el-button
             size="small"
-            type="danger"
+            type="success"
             @click="handleSendMail(scope.$index, scope.row)">发送邮件</el-button>
           <el-button
             size="small"
@@ -94,12 +94,12 @@
       <el-col :span="8" style="text-align: left;padding-top: 20px">
         <el-button
           size="mini"
-          type="warning"
+          type="success"
           :disabled="!isHasSelection"
           @click="selectSendMsg(currentSelection)">选中发送短信</el-button>
         <el-button
           size="mini"
-          type="danger"
+          type="success"
           :disabled="!isHasSelection"
           @click="selectSendMail(currentSelection)">选中发送邮件</el-button>
         <el-button
