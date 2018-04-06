@@ -43,6 +43,7 @@ password: "123456"
     "token": "管理员请求token"    
   }
 }
+
 错误:
 参见第0条
 ```
@@ -54,8 +55,8 @@ GET /admin/online/getAll
 ```
 参数：
 ```
-current: 1
-size: 8
+current: "1"
+size: "8"
 ```
 响应：
 ```
@@ -82,6 +83,7 @@ size: 8
     }
   ]
 }
+
 错误:
 参见第0条
 ```
@@ -107,6 +109,7 @@ GET /admin/online/getPage
     "page": 2
   }
 }
+
 错误:
 参见第0条
 ```
@@ -134,6 +137,7 @@ id: "544213131354582"
     "desc": "为了王者的荣耀!!!",
   }
 }
+
 错误:
 参见第0条
 ```
@@ -174,6 +178,7 @@ id: "544213131354582"
     },
   ]
 }
+
 错误:
 参见第0条
 ```
@@ -214,6 +219,7 @@ id: "544213131354582"
     }
   ]
 }
+
 错误:
 参见第0条
 ```
@@ -250,6 +256,7 @@ id: "544213131354582"
     }
   ]
 }
+
 错误:
 参见第0条
 ```
@@ -273,6 +280,7 @@ roleId: "544213131354582"
   "message": "success",
   "result": true
 }
+
 错误:
 {
   "status": 0,
@@ -299,6 +307,7 @@ roleId: "544213131354582"
   "message": "success",
   "result": true
 }
+
 错误:
 {
   "status": 0,
@@ -324,6 +333,7 @@ id: "544212342423434"
   "message": "success",
   "result": true
 }
+
 错误:
 {
   "status": 0,
@@ -349,6 +359,7 @@ id: "544212342423434"
   "message": "success",
   "result": true
 }
+
 错误:
 {
   "status": 0,
@@ -377,6 +388,7 @@ POST /verify/generate
   "message": "success",
   "result": "图片验证码Base64编码"
 }
+
 错误:
 参见第0条
 ```
@@ -398,6 +410,7 @@ code: "S4du"
   "message": "success",
   "result": true 
 }
+
 错误:
 {
   "status": 0,
@@ -414,8 +427,8 @@ GET /user/online/getAll
 ```
 参数：
 ```
-current: 1
-size: 8
+current: "1"
+size: "8"
 ```
 响应：
 ```
@@ -442,6 +455,7 @@ size: 8
     }
   ]
 }
+
 错误:
 参见第0条
 ```
@@ -467,6 +481,7 @@ GET /user/online/getPage
     "page": 2
   }
 }
+
 错误:
 参见第0条
 ```
@@ -494,6 +509,7 @@ id: "544213131354582"
     "desc": "为了王者的荣耀!!!",
   }
 }
+
 错误:
 参见第0条
 ```
@@ -531,9 +547,10 @@ id: "544213131354582"
       "name": "未知用户",
       "desc": "未知用户角色集合",
       "type": 1
-    },
+    }
   ]
 }
+
 错误:
 参见第0条
 ```
@@ -574,6 +591,7 @@ id: "544213131354582"
     }
   ]
 }
+
 错误:
 参见第0条
 ```
@@ -610,6 +628,7 @@ id: "544213131354582"
     }
   ]
 }
+
 错误:
 参见第0条
 ```
@@ -633,6 +652,7 @@ roleId: "544213131354582"
   "message": "success",
   "result": true
 }
+
 错误:
 {
   "status": 0,
@@ -659,6 +679,7 @@ roleId: "544213131354582"
   "message": "success",
   "result": true
 }
+
 错误:
 {
   "status": 0,
@@ -684,6 +705,7 @@ id: "544212342423434"
   "message": "success",
   "result": true
 }
+
 错误:
 {
   "status": 0,
@@ -709,6 +731,7 @@ id: "544212342423434"
   "message": "success",
   "result": true
 }
+
 错误:
 {
   "status": 0,
@@ -725,7 +748,8 @@ GET /role/getAll
 ```
 参数:
 ```
-无
+current: "1"
+size: "8"
 ```
 响应：
 ```
@@ -751,14 +775,41 @@ GET /role/getAll
       "name": "未知用户",
       "desc": "未知用户角色集合",
       "type": 1
-    },
+    }
   ]
 }
+
 错误:
 参见第0条
 ```
 
-### 4.2 加载指定类型角色列表
+### 4.2 加载全部角色分页信息
+请求:
+```
+GET /role/getPage
+```
+参数:
+```
+无
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": {
+    "size": 12,
+    "total": 20,
+    "page": 2
+  }
+}
+
+错误:
+参见第0条
+```
+
+### 4.3 加载指定类型角色列表
 请求:
 ```
 GET /role/getList
@@ -791,10 +842,324 @@ type: "1"
       "name": "未知用户",
       "desc": "未知用户角色集合",
       "type": 1
-    },
+    }
   ]
 }
+
 错误:
 参见第0条
 ```
 
+## 5. 资源相关请求
+### 5.1 获取全部资源列表
+请求:
+```
+GET /resource/getAll
+```
+参数:
+```
+current: "1"
+size: "8"
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": [
+    {
+      "id": "544213131354582",
+      "type": "post"
+      "name": "用户登录",
+      "path": "/user/login",
+      "desc": "用户登录请求"
+    },
+    {
+      "id": "544213131354583",
+      "type": "post"
+      "name": "用户退出",
+      "path": "/user/logout",
+      "desc": "用户退出请求"
+    }
+  ]
+}
+
+错误:
+参见第0条
+```
+
+### 5.2 获取全部资源分页信息
+请求:
+```
+GET /resource/getPage
+```
+参数:
+```
+无
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": {
+    "size": 12,
+    "total": 20,
+    "page": 2
+  }
+}
+
+错误:
+参见第0条
+```
+
+### 5.3 获取指定资源角色和权限列表
+请求:
+```
+GET /resource/getInfoRoleAndPerm
+```
+参数:
+```
+resourceId: "544213131354582"
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": {
+    "resourceInfo": {
+      "id": "544213131354583",
+      "type": "post"
+      "name": "用户退出",
+      "path": "/user/logout",
+      "desc": "用户退出请求"
+    },
+    "roleList": [
+      {
+        "id": "544213131354584",
+        "name": "角色1",
+        "desc": "角色1集合",
+        "type": 1
+      },
+      {
+        "id": "544213131354585",
+        "name": "角色2",
+        "desc": "角色2集合",
+        "type": 1
+      },
+      {
+        "id": "544213131354586",
+        "name": "角色3",
+        "desc": "角色3集合",
+        "type": 2
+      }
+    ],
+    "permList": [
+      {
+        "id": "544213131346584",
+        "name": "权限1",
+        "desc": "权限1",
+        "type": 2
+      },
+      {
+        "id": "544873131354585",
+        "name": "权限2",
+        "desc": "权限2",
+        "type": 1
+      },
+      {
+        "id": "544213631354586",
+        "name": "权限",
+        "desc": "权限3",
+        "type": 1
+      }
+    ]
+  }
+}
+
+错误:
+参见第0条
+```
+
+### 5.4 获取指定资源信息
+请求:
+```
+GET /resource/getInfo
+```
+参数:
+```
+resourceId: "544213131354582"
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": {  
+    "id": "544213131354583",
+    "type": "post"
+    "name": "用户退出",
+    "path": "/user/logout",
+    "desc": "用户退出请求"
+  }
+}
+  
+错误:
+参见第0条     
+```
+
+### 5.5 添加指定资源权限或角色
+请求:
+```
+PUT /resource/addRoleOrPerm
+```
+参数:
+```
+resourceId: "544213131354582"
+roleId: "124213131354565"
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": true
+}
+
+错误: 
+{
+  "status": 0,
+  "message": "fail",
+  "result": false
+}
+```
+
+### 5.6 删除指定资源权限或角色
+请求:
+```
+DELETE /resource/removeRoleOrPerm
+```
+参数:
+```
+resourceId: "544213131354582"
+roleId: "124213131354565"
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": true
+}
+
+错误: 
+{
+  "status": 0,
+  "message": "fail",
+  "result": false
+}
+```
+
+## 6. 权限相关请求
+### 6.1 加载全部权限列表
+请求:
+```
+GET /perm/getAll
+```
+参数:
+```
+current: "1"
+size: "8"
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": [
+    {
+      "id": "544213131354582",
+      "name": "权限1",
+      "desc": "权限1",
+      "type": 1
+    },
+    {
+      "id": "544213131354583",
+      "name": "权限2",
+      "desc": "权限2",
+      "type": 2
+    },
+    {
+      "id": "544213131354584",
+      "name": "权限3",
+      "desc": "权限3",
+      "type": 1
+    }
+  ]
+}
+
+错误:
+参见第0条
+```
+
+### 6.2 加载全部权限分页信息
+请求:
+```
+GET /perm/getPage
+```
+参数:
+```
+无
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": {
+    "size": 12,
+    "total": 20,
+    "page": 2
+  }
+}
+
+错误:
+参见第0条
+```
+
+### 6.3 添加新权限
+请求:
+```
+PUT /perm/add
+```
+参数:
+```
+name: "权限1",
+
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": true
+}
+
+错误:
+{
+  "status": 0,
+  "message": "fail",
+  "result": false
+}
+
+```

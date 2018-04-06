@@ -1,6 +1,6 @@
 <!-- 自定义权限树组件 -->
 <template>
-  <v-box title="权限树" :is-show-refresh="true" @on-add-refresh="filterText('')">
+  <v-box title="权限树" :is-show-refresh="true" @on-refresh-click="filterText('')">
     <template slot="main">
       <div style="padding: 10px">
         <v-search placeholder="按“enter”键过滤权限信息哟~~~" @on-enter="filterText" />

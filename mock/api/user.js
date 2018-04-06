@@ -171,11 +171,10 @@ routers.delete('/removeRole', (req, resp) => {
 routers.put('/addRole', (req, resp) => {
   let data = req.body.data;
   console.log(data);
-  Mock.Random.boolean();
   resp.json(Mock.mock({
     "status": 1,
     "message": "success",
-    "result": "@boolean"
+    "result": true
   }));
 });
 

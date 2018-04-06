@@ -10,7 +10,7 @@
     <el-row :gutter="20">
       <el-col :span="17">
         <div class="left-wrapper">
-          <v-box title="管理员列表信息">
+          <v-box title="管理员列表信息" :is-show-footer="true" :is-show-refresh="true" @on-refresh-click="pageInit">
             <template slot="main">
               <el-table
                 :data="tableData"
@@ -56,19 +56,17 @@
                   sortable>
                 </el-table-column>
               </el-table>
-              <el-row>
-                <el-col>
-                  <el-pagination
-                    background
-                    layout="prev, pager, next"
-                    :total="pageInfo.total"
-                    :page-size="pageInfo.size"
-                    :current-page.sync="currentPage"
-                    @current-change="getAll(currentPage, pageInfo.size)"
-                    style="text-align: center;padding-top: 20px">
-                  </el-pagination>
-                </el-col>
-              </el-row>
+            </template>
+            <template slot="footer">
+              <el-pagination
+                background
+                layout="prev, pager, next"
+                :total="pageInfo.total"
+                :page-size="pageInfo.size"
+                :current-page.sync="currentPage"
+                @current-change="getAll(currentPage, pageInfo.size)"
+                style="padding: 0">
+              </el-pagination>
             </template>
           </v-box>
         </div>
@@ -95,9 +93,9 @@
                       <el-button
                         size="small"
                         type="danger"
-                        title="删除角色"
+                        title="移除角色"
                         @click="roleRemove(scope.$index, scope.row)">
-                        <i class="el-icon-remove-outline"></i>
+                        移除角色
                       </el-button>
                     </template>
                   </el-table-column>

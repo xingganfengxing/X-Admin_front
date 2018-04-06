@@ -4,15 +4,22 @@
     <div class="v-box-header" :style="headerStyles">
       <span class="v-box-header-title" v-text="title"></span>
       <el-badge class="v-box-header-badge" v-if="isShowBadge" :value="badgeValue" ></el-badge>
-      <label v-if="isShowAdd"  class="v-box-header-icon">
-        <i @click="clickAdd" class="el-icon-circle-plus-outline" title="添加"></i>
-      </label>
-      <label v-if="isShowRefresh"  class="v-box-header-icon">
-        <i @click="clickRefresh" class="el-icon-refresh" title="刷新"></i>
-      </label>
+      <div class="v-box-header-icon-wrapper">
+        <label v-if="isShowAdd"  class="v-box-header-icon">
+          <i @click="clickAdd" class="el-icon-circle-plus-outline" title="添加"></i>
+        </label>
+        <label v-if="isShowRefresh"  class="v-box-header-icon">
+          <i @click="clickRefresh" class="el-icon-refresh" title="刷新"></i>
+        </label>
+      </div>
     </div>
-    <div class="v-box-main">
+    <div :class="['v-box-main', isShowFooter ? 'v-box-main_1' : 'v-box-main_2']">
       <slot name="main">
+      </slot>
+    </div>
+
+    <div v-show="isShowFooter" class="v-box-footer">
+      <slot name="footer">
       </slot>
     </div>
   </div>
@@ -55,7 +62,7 @@
         this.isShowAdd && this.$emit('on-add-click');
       },
       clickRefresh () {
-        this.isShowRefresh && this.$emit('on-add-refresh');
+        this.isShowRefresh && this.$emit('on-refresh-click');
       }
     },
     props: {
@@ -73,7 +80,7 @@
       },
       isShowBadge: {
         type: Boolean,
-        default:false
+        default: false
       },
       badgeValue: {
         type: String,
@@ -86,6 +93,10 @@
       isShowRefresh: {
         type: Boolean,
         default: false
+      },
+      isShowFooter: {
+        type: Boolean,
+        default: false
       }
     }
   }
@@ -96,6 +107,7 @@
 
   @box-header-height: 40px;
   @box-border-radius: 10px;
+  @box-footer-height: 50px;
 
   .v-box-area {
     width: 100%;
@@ -103,6 +115,7 @@
     background-color: #fff;
     border-radius: @box-border-radius;
     overflow: hidden;
+    position: relative;
   }
   .v-box-header {
     position: relative;
@@ -120,10 +133,17 @@
       top: -10px;
       left: -5px;
     }
-    .v-box-header-icon {
+
+    .v-box-header-icon-wrapper {
       position: absolute;
-      top: 3px;
+      height: @box-header-height;
+      top: 0;
       right: 10px;
+    }
+    .v-box-header-icon {
+      float: right;
+      height: @box-header-height;
+      padding-top: 3px;
       i {
         cursor: pointer;
         padding: 5px;
@@ -134,11 +154,28 @@
   }
 
   .v-box-main {
-    height: calc(~"100% - (@{box-header-height})");
     border-bottom-left-radius: @box-border-radius;
     border-bottom-right-radius: @box-border-radius;
     background-color: #fff;
     overflow: hidden;
   }
 
+  .v-box-main_1 {
+    height: calc(~"100% - (@{box-header-height} + @{box-footer-height})");
+  }
+
+  .v-box-main_2 {
+    height: calc(~"100% - (@{box-header-height})");
+  }
+
+  .v-box-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: @box-footer-height;
+    background-color: #fff;
+    line-height: @box-footer-height;
+    text-align: center;
+  }
 </style>
