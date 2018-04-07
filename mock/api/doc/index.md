@@ -850,6 +850,95 @@ type: "1"
 参见第0条
 ```
 
+### 4.4 修改指定角色
+请求:
+```
+POST /role/update
+```
+参数:
+```
+id: "23413131354582"
+name: "角色1"
+type: "1"
+desc: "角色集合1"
+perms: ["1", "2", "4", "100"]
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": true
+}
+
+错误:
+{
+  "status": 0,
+  "message": "fail",
+  "result": false
+}
+
+```
+### 4.5 删除指定角色
+请求:
+```
+DELETE /role/delete
+```
+参数:
+```
+id: "23413131354582"
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": true
+}
+
+错误:
+{
+  "status": 0,
+  "message": "fail",
+  "result": false
+}
+
+```
+
+### 4.6 添加指定角色
+请求:
+```
+PUT /role/add
+```
+参数:
+```
+name: "角色1"
+type: "1"
+desc: "角色集合1"
+perms: ["1", "2", "4", "100"]
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": true
+}
+
+错误:
+{
+  "status": 0,
+  "message": "fail",
+  "result": false
+}
+
+```
+
+
+
 ## 5. 资源相关请求
 ### 5.1 获取全部资源列表
 请求:
@@ -1143,8 +1232,9 @@ PUT /perm/add
 ```
 参数:
 ```
-name: "权限1",
-
+name: "权限1"
+type: "1"
+desc: "权限1"
 ```
 响应：
 ```
@@ -1163,3 +1253,60 @@ name: "权限1",
 }
 
 ```
+
+### 6.4 修改指定权限
+请求:
+```
+POST /perm/update
+```
+参数:
+```
+id: "23413131354582"
+name: "权限1"
+type: "1"
+desc: "权限1"
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": true
+}
+
+错误:
+{
+  "status": 0,
+  "message": "fail",
+  "result": false
+}
+
+```
+### 6.5 删除指定权限
+请求:
+```
+DELETE /perm/delete
+```
+参数:
+```
+id: "23413131354582"
+```
+响应：
+```
+正确:
+{
+  "status": 1,
+  "message": "success",
+  "result": true
+}
+
+错误:
+{
+  "status": 0,
+  "message": "fail",
+  "result": false
+}
+
+```
+

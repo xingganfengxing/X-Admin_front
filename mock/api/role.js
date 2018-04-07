@@ -68,4 +68,43 @@ routers.get('/getList', (req, resp) => {
   }));
 });
 
+/**
+ * 更新角色信息
+ */
+routers.post('/update', (req, resp) => {
+  let data = req.body.data;
+  console.log(data);
+  resp.json(Mock.mock({
+    "status": 1,
+    "message": "success",
+    "result": true
+  }));
+});
+
+/**
+ * 删除角色信息
+ */
+routers.delete('/delete', (req, resp) => {
+  let data = req.body;
+  console.log(data);
+  resp.json(Mock.mock({
+    "status": 1,
+    "message": "success",
+    "result": true
+  }));
+});
+
+/**
+ * 添加角色信息
+ */
+routers.put('/add', (req, resp) => {
+  let data = req.body.data;
+  console.log(data);
+  resp.json(Mock.mock({
+    "status": 1,
+    "message": "success",
+    "result": true
+  }));
+});
+
 module.exports = routers;

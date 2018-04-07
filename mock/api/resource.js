@@ -20,7 +20,7 @@ routers.get('/getAll', (req, resp) => {
         "id|15": /[0-9]/,
         "type": /all|get|post|delete|put/,
         "name": '@cword(4, 8)',
-        "path": /\/role|rsource|user|admin|verify|perm\/[a-z]{4,8}/,
+        "path": /^\/(role|rsource|user|admin|verify|perm)\/[a-z]{4,8}$/,
         "desc": '@csentence(8, 10)'
       }]
     }));
@@ -32,7 +32,7 @@ routers.get('/getAll', (req, resp) => {
         "id|15": /[0-9]/,
         "type": /all|get|post|delete|put/,
         "name": '@cword(4, 8)',
-        "path": /\/role|rsource|user|admin|verify|perm\/[a-z]{4,8}/,
+        "path": /^\/(role|rsource|user|admin|verify|perm)\/[a-z]{4,8}$/,
         "desc": '@csentence(8, 10)'
       }]
     }));
