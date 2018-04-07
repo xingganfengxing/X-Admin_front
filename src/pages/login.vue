@@ -131,10 +131,12 @@
             const loading = this.$loading({lock: true, text: '登录中...'});
             // 登录请求
             this.login(this.loginForm.username, this.loginForm.password).then((value) => {
-              this.$refs[formName].resetFields();
-              this.loginInit(value);
-              loading.close();
-              this.$router.replace({ path: '/user/online' });
+              setTimeout(() => {
+                this.$refs[formName].resetFields();
+                this.loginInit(value);
+                loading.close();
+                this.$router.replace({ path: '/user/online' });
+              }, 2000);
             }).catch(() => {
               this.$refs[formName].resetFields();
               loading.close();

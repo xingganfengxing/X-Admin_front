@@ -7,6 +7,7 @@
       <h3>注册</h3>
     </el-header>
     <el-main>
+      <v-context-menu :x="123" :y="210"></v-context-menu>
     </el-main>
 
     <v-float-ball position="left-bottom" title="返回登录页面" :link="{path : '/login'}">
@@ -19,13 +20,15 @@
 
 <script type="text/ecmascript-6">
   import VFloatBall from '../components/v_float_ball/v_float_ball'
+  import VContextMenu from '../components/v_context_menu/v_context_menu'
   const COMPONENT_NAME = 'register';
 
   export default {
     name: COMPONENT_NAME,
     methods: {},
     components: {
-      VFloatBall
+      VFloatBall,
+      VContextMenu
     }
   }
 </script>
